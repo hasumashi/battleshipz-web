@@ -1,0 +1,109 @@
+/*
+ * Helper SCSS for making layouts with Flexbox
+ */
+
+/*
+ * Flexbox
+ */
+
+/* Container classes */
+.row, .column {
+    display: flex;
+}
+
+.row             { flex-direction: row; }
+.column          { flex-direction: column; }
+// .row-reverse     { flex-direction: row-reverse; }
+// .column-reverse  { flex-direction: column-reverse; }
+
+.wrap            { flex-wrap: wrap; }
+.wrap-reverse    { flex-wrap: wrap-reverse; }
+
+// aligning along main/cross axis
+.align-start          { justify-content: flex-start; }
+.align-end            { justify-content: flex-end; }
+.align-center         { justify-content: center; }
+.align-space-around   { justify-content: space-around; }
+.align-space-between  { justify-content: space-between; }
+.align-space-evenly   { justify-content: space-evenly; }
+
+.align-cross-stretch  { align-items: stretch; }
+.align-cross-start    { align-items: flex-start; }
+.align-cross-end      { align-items: flex-end; }
+.align-cross-center   { align-items: center; }
+.align-cross-baseline { align-items: baseline; }
+
+
+/* Item classes */
+.grow {
+    flex-grow: 1;
+}
+
+.no-shrink {
+    flex-shrink: 0;
+}
+
+// .flex-relative {
+//     flex-basis: auto; // the default
+// }
+
+// item ordering
+// $columns: 12; TODO remove
+
+
+.size-absolute {
+    flex-basis: 0;
+}
+
+.row .size-1-1 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.column .size-1-1 {
+    flex: 0 0 100%;
+    max-height: 100%;
+}
+
+@mixin size-X-Y {
+    @for $y from 2 through 6 {
+        @for $x from 1 through $y - 1 {
+            $size: $x/$y * 1%;
+            .row .size-#{$x}-#{$y} {
+                flex: 0 0 $size;
+                max-width: $size;
+            }
+            .column .size-#{$x}-#{$y} {
+                flex: 0 0 $size;
+                max-height: $size;
+            }
+        }
+    }
+}
+@include size-X-Y;
+
+@mixin order-N {
+    @for $i from 1 through 6 {
+        .order-#{$i} {
+            order: $i;
+        }
+    }
+}
+@include order-N;
+
+// self aligning
+.align-self-stretch  { align-self: stretch; }
+.align-self-start    { align-self: flex-start; }
+.align-self-end      { align-self: flex-end; }
+.align-self-center   { align-self: center; }
+.align-self-baseline { align-self: baseline; }
+
+
+/*
+ * General helper classes
+ */
+
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+
