@@ -67,12 +67,12 @@
 @mixin size-X-Y {
     @for $y from 2 through 6 {
         @for $x from 1 through $y - 1 {
-            $size: $x/$y * 1%;
-            .row .size-#{$x}-#{$y} {
+            $size: $x/$y * 100%;
+            .row > .size-#{$x}-#{$y} {
                 flex: 0 0 $size;
                 max-width: $size;
             }
-            .column .size-#{$x}-#{$y} {
+            .column > .size-#{$x}-#{$y} {
                 flex: 0 0 $size;
                 max-height: $size;
             }

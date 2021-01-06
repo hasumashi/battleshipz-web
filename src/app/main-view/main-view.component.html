@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="size-3-5 padding">
+		<p>main-view works!</p>
+		<button mat-button routerLink="/invite">Join / Invite</button>
+		<button mat-button routerLink="/random">Find random opponent</button>
+		<button mat-button routerLink="/ranking">Ranking</button>
+	</div>
+
+	<mat-divider [vertical]="true"></mat-divider>
+	<div class="size-2-5 padding panel">
+		<mat-card>
+			<h2>
+				<i class="material-icons" [routerLink]="baseRoutePath">arrow_back</i>
+				{{panelTitle}}
+			</h2>
+			<router-outlet></router-outlet> <!-- side panel -->
+		</mat-card>
+	</div>
+</div>
