@@ -1,3 +1,13 @@
-.panel {
+.panel,
+.wide-card {
     max-width: 600px;
+    margin-bottom: 2em;
+}
+
+.box-card {
+    max-width: 300px;
+}
+
+.panel h2 {
+    font-family: var(--fonts-display);
 }

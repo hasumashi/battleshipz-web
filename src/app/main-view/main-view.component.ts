@@ -9,8 +9,9 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@
 export class MainViewComponent implements OnInit {
 
 	panelTitle = '';
-
 	baseRoutePath = this.route.snapshot.routeConfig?.path;
+
+	isPanelOpen = () => !!this.panelTitle;
 
 	constructor(private router: Router, private route: ActivatedRoute) { }
 

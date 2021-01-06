@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-	playersOnline: number = 128;
+	playersOnline: number = 0;
 
 	constructor() { }
 

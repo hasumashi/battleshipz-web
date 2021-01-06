@@ -4,6 +4,8 @@
 
 :root {
     --content-margin: 20rem;
+    --fonts-display: "Comfortaa", Roboto, "DejaVu Sans", Helvetica, sans-serif;
+    --fonts-sans: "DejaVu Sans", Helvetica, sans-serif;
 }
 
 *,
@@ -14,13 +16,12 @@
 
 html {
     box-sizing: border-box;
-    // font-size: 62.5%;
 }
 
 body {
     background: #fafafa;
     margin: 0;
-    font-family: "Comfortaa", Roboto, "DejaVu Sans", Helvetica, sans-serif;
+    font-family: var(--fonts-display);
 
     // font-size: 1.6em;
     // font-weight: 300;
@@ -34,16 +35,68 @@ body {
 }
 
 .font-sans {
-    font-family: "DejaVu Sans", Helvetica, sans-serif;
+    font-family: var(--fonts-sans);
 }
 
 .padding {
     padding: 1rem;
 }
 
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    pointer-events: none;
+}
+
+%decorative-pseudo-elem {
+    content: '';
+    display: block;
+    position: absolute;
+}
+
+// Angular Material  // TODO create Angular Material theme and change fonts there
+.mat-card {
+    font-family: var(--fonts-sans);
+}
+
+.mat-card-title {
+    font-family: var(--fonts-display);
+}
+
+.card-header-overlapping {
+    position: relative;
+}
+.card-header-overlapping::after {
+    @extend %decorative-pseudo-elem;
+    height: 4em;
+    left: -16px; right: -16px;
+    bottom: 20px;
+    z-index: 0;
+    background: linear-gradient(0, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.card-header-overlapping .mat-card-header {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+.card-header-overlapping .mat-card-header-text {
+    // TODO: consider md-light/md-dark
+    text-shadow: 0 1px 4px #0008;
+    color: #fff;
+    margin: 1em 0;
+}
+.card-header-overlapping .mat-card-title {
+    font-weight: 600;
+    font-size: 175%;
+}
+
 // Material icons
 .material-icons {
     vertical-align: text-top;
+    transition: color 0.3s ease;
 }
 
 .material-icons.ok {
@@ -54,4 +107,7 @@ body {
 }
 .material-icons.danger {
     color: #f44336;
+}
+.material-icons.gray {
+    color: #ccc;
 }

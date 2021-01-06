@@ -13,6 +13,7 @@ import { MainViewComponent } from './main-view/main-view.component';
 import { InvitePanelComponent } from './main-view/panels/invite-panel/invite-panel.component';
 import { MatchmakerPanelComponent } from './main-view/panels/matchmaker-panel/matchmaker-panel.component';
 import { RankingPanelComponent } from './main-view/panels/ranking-panel/ranking-panel.component';
+import { WelcomeCardComponent } from './main-view/welcome-card/welcome-card.component';
 
 @NgModule({
 	declarations: [
@@ -22,6 +23,7 @@ import { RankingPanelComponent } from './main-view/panels/ranking-panel/ranking-
 		InvitePanelComponent,
 		MatchmakerPanelComponent,
 		RankingPanelComponent,
+		WelcomeCardComponent,
 	],
 	imports: [
 		BrowserModule,

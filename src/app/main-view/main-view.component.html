@@ -1,19 +1,19 @@
-<div class="row">
-	<div class="size-3-5 padding">
-		<p>main-view works!</p>
-		<button mat-button routerLink="/invite">Join / Invite</button>
-		<button mat-button routerLink="/random">Find random opponent</button>
-		<button mat-button routerLink="/ranking">Ranking</button>
+<div class="row"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
+	<div class="size-3-5 padding column align-cross-center" [class.size-1-1]="isPanelOpen()">
+		<app-welcome-card class="wide-card"></app-welcome-card>
+		<app-welcome-card class="wide-card"></app-welcome-card>
 	</div>
 
-	<mat-divider [vertical]="true"></mat-divider>
-	<div class="size-2-5 padding panel">
-		<mat-card>
-			<h2>
-				<i class="material-icons" [routerLink]="baseRoutePath">arrow_back</i>
-				{{panelTitle}}
-			</h2>
-			<router-outlet></router-outlet> <!-- side panel -->
-		</mat-card>
-	</div>
+	<ng-template [ngIf]="isPanelOpen()">
+		<mat-divider [vertical]="true"></mat-divider>
+		<div class="size-2-5 padding panel">
+			<mat-card>
+				<h2>
+					<i class="material-icons" style="cursor: pointer;" [routerLink]="baseRoutePath">arrow_back</i>
+					{{panelTitle}}
+				</h2>
+				<router-outlet></router-outlet> <!-- side panel -->
+			</mat-card>
+		</div>
+	</ng-template>
 </div>
