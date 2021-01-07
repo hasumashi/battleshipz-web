@@ -35,7 +35,19 @@ body {
 }
 
 .content-wrapper {
-    margin: 0 1rem;
+    margin: 0 auto;
+    width: 80vw;
+}
+
+@media (max-width: 1400px) {
+    .content-wrapper {
+        width: 95vw;
+    }
+}
+@media (max-width: 1200px) {
+    .content-wrapper {
+        width: 100%;
+    }
 }
 
 .font-sans {
