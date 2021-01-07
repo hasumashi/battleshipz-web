@@ -1,0 +1,29 @@
+.box-card {
+    & {
+        color: #fff;
+        background: #3f51b5;
+        height: 100%;
+    }
+
+    .mat-card-header .mat-card-title {
+        font-family: var(--fonts-sans);
+        font-size: 2.25vw;
+        line-height: 130%;
+        margin-top: 0.5rem;
+        white-space: pre-wrap;
+    }
+
+    mat-card-footer {
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        left: 0;
+        right: 0;
+        // line-height: 3rem;
+        line-height: 52px;
+    }
+
+    .mat-divider {
+        border-top-color: rgba(255, 255, 255, 0.24);
+    }
+}

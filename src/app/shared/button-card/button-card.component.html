@@ -1,0 +1,12 @@
+<mat-card class="box-card" [style.background]="color">
+	<mat-card-header>
+		<mat-card-title>{{title}}</mat-card-title>
+		<!-- <mat-card-subtitle>{{subtitle}}</mat-card-subtitle> --> <!-- TODO -->
+	</mat-card-header>
+	<mat-card-footer>
+		<mat-divider></mat-divider>
+		<button mat-button routerLink="/invite">
+			{{buttonText}} <i class="material-icons">arrow_forward</i>
+		</button>
+	</mat-card-footer>
+</mat-card>

@@ -34,6 +34,10 @@ body {
     height: 100%;
 }
 
+.content-wrapper {
+    margin: 0 1rem;
+}
+
 .font-sans {
     font-family: var(--fonts-sans);
 }
@@ -51,7 +55,7 @@ body {
 }
 
 %decorative-pseudo-elem {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
 }
@@ -71,10 +75,15 @@ body {
 .card-header-overlapping::after {
     @extend %decorative-pseudo-elem;
     height: 4em;
-    left: -16px; right: -16px;
+    left: -16px;
+    right: -16px;
     bottom: 20px;
     z-index: 0;
-    background: linear-gradient(0, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(
+        0,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
 }
 .card-header-overlapping .mat-card-header {
     position: absolute;
@@ -92,6 +101,7 @@ body {
     font-weight: 600;
     font-size: 175%;
 }
+
 
 // Material icons
 .material-icons {

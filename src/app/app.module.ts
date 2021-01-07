@@ -14,6 +14,7 @@ import { InvitePanelComponent } from './main-view/panels/invite-panel/invite-pan
 import { MatchmakerPanelComponent } from './main-view/panels/matchmaker-panel/matchmaker-panel.component';
 import { RankingPanelComponent } from './main-view/panels/ranking-panel/ranking-panel.component';
 import { WelcomeCardComponent } from './main-view/welcome-card/welcome-card.component';
+import { ButtonCardComponent } from './shared/button-card/button-card.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { WelcomeCardComponent } from './main-view/welcome-card/welcome-card.comp
 		MatchmakerPanelComponent,
 		RankingPanelComponent,
 		WelcomeCardComponent,
+		ButtonCardComponent,
 	],
 	imports: [
 		BrowserModule,
