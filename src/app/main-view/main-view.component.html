@@ -1,13 +1,13 @@
-<div class="row"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
-	<div class="columnsize-1-1" [class.size-3-5]="isPanelOpen()">
-		<div class="row size-1-1 align-space-evenly">
+<div class="row align-center"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
+	<div class="column size-3-5" [class.size-4-6]="!isPanelOpen()"> <!-- style="transition: flex-basis 0.5s ease;" TODO: .size-animated/transition -->
+		<div class="row align-space-evenly">
 			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
 			<div class="flex size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
 				<app-button-card title="Find&#10;your&#10;opponent" buttonText="PLAY" class="grow"></app-button-card>
 			</div>
 		</div>
 
-		<div class="row size-1-1 align-space-evenly">
+		<div class="row align-space-evenly">
 			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
 			<div class="flex size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
 				<app-button-card title="Play&#10;with&#10;friend" buttonText="INVITE" color="#00897b" class="grow"></app-button-card>

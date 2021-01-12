@@ -3,7 +3,7 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 :root {
-    --content-margin: 20rem;
+    --content-margin: 22vw;//20rem; TODO change name - used only in header now
     --fonts-display: "Comfortaa", Roboto, "DejaVu Sans", Helvetica, sans-serif;
     --fonts-sans: "DejaVu Sans", Helvetica, sans-serif;
 }
@@ -22,11 +22,6 @@ body {
     background: #fafafa;
     margin: 0;
     font-family: var(--fonts-display);
-
-    // font-size: 1.6em;
-    // font-weight: 300;
-    // letter-spacing: .01em;
-    // line-height: 1.6;
 }
 
 html,
@@ -39,32 +34,10 @@ body {
     width: 80vw;
 }
 
-@media (max-width: 1400px) {
-    .content-wrapper {
-        width: 95vw;
-    }
-}
-@media (max-width: 1200px) {
-    .content-wrapper {
-        width: 100%;
-    }
-}
-
 .font-sans {
     font-family: var(--fonts-sans);
 }
 
-.padding {
-    padding: 1rem;
-}
-
-.no-select {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-
-    pointer-events: none;
-}
 
 %decorative-pseudo-elem {
     content: "";
@@ -132,4 +105,18 @@ body {
 }
 .material-icons.gray {
     color: #ccc;
+}
+
+
+// Breakpoints
+@media (max-width: 1400px) {
+    .content-wrapper {
+        width: 95vw;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content-wrapper {
+        width: 100%;
+    }
 }
