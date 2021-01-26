@@ -19,6 +19,7 @@ import { WelcomeCardComponent } from './main-view/welcome-card/welcome-card.comp
 import { ButtonCardComponent } from './shared/button-card/button-card.component';
 import { PrepareBoardViewComponent } from './prepare-board-view/prepare-board-view.component';
 import { BattleViewComponent } from './battle-view/battle-view.component';
+import { GameBoardComponent } from './shared/game-board/game-board.component';
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { BattleViewComponent } from './battle-view/battle-view.component';
 		ButtonCardComponent,
 		PrepareBoardViewComponent,
 		BattleViewComponent,
+		GameBoardComponent,
 	],
 	imports: [
 		BrowserModule,

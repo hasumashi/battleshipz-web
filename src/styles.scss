@@ -3,7 +3,7 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 :root {
-    --content-margin: 22vw;//20rem; TODO change name - used only in header now
+    --content-margin: 22vw; //20rem; TODO change name - used only in header now
     --fonts-display: "Comfortaa", Roboto, "DejaVu Sans", Helvetica, sans-serif;
     --fonts-sans: "DejaVu Sans", Helvetica, sans-serif;
 }
@@ -29,12 +29,31 @@ body {
     height: 100%;
 }
 
-.content-wrapper {
+.view-wrapper {
     margin: 0 auto;
     width: 80vw;
+    height: 100%;
 }
 
+// make view component flex by default of full page height
+.view-wrapper > router-outlet + * {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.view-wrapper h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-top: 1rem;
+}
+
+
 .font-sans {
+    font-family: var(--fonts-sans);
+}
+.font-display {
     font-family: var(--fonts-sans);
 }
 
@@ -122,13 +141,13 @@ body {
 
 // Breakpoints
 @media (max-width: 1400px) {
-    .content-wrapper {
+    .view-wrapper {
         width: 95vw;
     }
 }
 
 @media (max-width: 1200px) {
-    .content-wrapper {
+    .view-wrapper {
         width: 100%;
     }
 }
