@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,8 @@ import { MatchmakerPanelComponent } from './main-view/panels/matchmaker-panel/ma
 import { RankingPanelComponent } from './main-view/panels/ranking-panel/ranking-panel.component';
 import { WelcomeCardComponent } from './main-view/welcome-card/welcome-card.component';
 import { ButtonCardComponent } from './shared/button-card/button-card.component';
+import { PrepareBoardViewComponent } from './prepare-board-view/prepare-board-view.component';
+import { BattleViewComponent } from './battle-view/battle-view.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +30,8 @@ import { ButtonCardComponent } from './shared/button-card/button-card.component'
 		RankingPanelComponent,
 		WelcomeCardComponent,
 		ButtonCardComponent,
+		PrepareBoardViewComponent,
+		BattleViewComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -36,6 +42,7 @@ import { ButtonCardComponent } from './shared/button-card/button-card.component'
 		MatCardModule,
 		MatDividerModule,
 		MatButtonModule,
+		MatProgressSpinnerModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

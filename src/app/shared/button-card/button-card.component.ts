@@ -11,6 +11,7 @@ export class ButtonCardComponent {
 	@Input() subtitle = '';
 	@Input() buttonText = 'GO';
 	@Input() color = '#3f51b5';
+	@Input() link = '/'; // routerLink to navigate when button clicked
 
 	constructor() { }
 

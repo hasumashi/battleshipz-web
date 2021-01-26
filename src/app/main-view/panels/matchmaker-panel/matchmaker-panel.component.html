@@ -1,1 +1,26 @@
-<p>matchmaker-panel works!</p>
+<!-- TODO fix h-1-1 causing overflow -->
+<!-- TODO button changes position when clicked (align-space-around) -->
+<div class="column align-space-around align-cross-center h-1-1" [ngSwitch]="matchmakingState">
+	<ng-container *ngSwitchDefault>
+		<div class="text-center">
+			<i class="material-icons md-64">groups</i>
+			<p>There are <strong>{{playersAvailable}}</strong> players online right now</p>
+		</div>
+		<div>
+			<button mat-button (click)="startSearching()">FIND OPPONENT</button>
+		</div>
+	</ng-container>
+
+	<ng-container *ngSwitchCase="MatchmakingState.Searching">
+		<div class="text-center">
+			<mat-spinner diameter="64" class="margin-center"></mat-spinner>
+			<p>
+				Waiting for opponent…<br>
+				<small>{{timer.timeElapsed | date:'mm:ss'}}</small>
+			</p>
+		</div>
+		<div>
+			<button mat-button (click)="cancelSearching()">CANCEL</button>
+		</div>
+	</ng-container>
+</div>

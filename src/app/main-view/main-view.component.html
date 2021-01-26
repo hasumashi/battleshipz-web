@@ -3,14 +3,14 @@
 		<div class="row align-space-evenly">
 			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
 			<div class="flex size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
-				<app-button-card title="Find&#10;your&#10;opponent" buttonText="PLAY" class="grow"></app-button-card>
+				<app-button-card title="Find&#10;your&#10;opponent" buttonText="PLAY" link="/random" class="grow"></app-button-card>
 			</div>
 		</div>
 
 		<div class="row align-space-evenly">
 			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
 			<div class="flex size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
-				<app-button-card title="Play&#10;with&#10;friend" buttonText="INVITE" color="#00897b" class="grow"></app-button-card>
+				<app-button-card title="Play&#10;with&#10;friend" buttonText="INVITE" link="/invite" color="#00897b" class="grow"></app-button-card>
 			</div>
 		</div>
 	</div>
