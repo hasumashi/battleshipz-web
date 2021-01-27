@@ -20,6 +20,7 @@ import { ButtonCardComponent } from './shared/button-card/button-card.component'
 import { PrepareBoardViewComponent } from './prepare-board-view/prepare-board-view.component';
 import { BattleViewComponent } from './battle-view/battle-view.component';
 import { GameBoardComponent } from './shared/game-board/game-board.component';
+import { ElsePipe } from './shared/else.pipe';
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,7 @@ import { GameBoardComponent } from './shared/game-board/game-board.component';
 		PrepareBoardViewComponent,
 		BattleViewComponent,
 		GameBoardComponent,
+		ElsePipe,
 	],
 	imports: [
 		BrowserModule,

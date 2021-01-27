@@ -3,8 +3,11 @@
 <div class="column align-space-around align-cross-center h-1-1" [ngSwitch]="matchmakingState">
 	<ng-container *ngSwitchDefault>
 		<div class="text-center">
-			<i class="material-icons md-64">groups</i>
-			<p>There are <strong>{{playersAvailable}}</strong> players online right now</p>
+			<i class="material-icons md-64" *ngIf="playersAvailable; else: noPlayersIcon">groups</i>
+			<ng-template #noPlayersIcon>
+				<i class="material-icons md-64">sentiment_dissatisfied</i>
+			</ng-template>
+			<p>There are <strong>{{playersAvailable | else:'no'}}</strong> players online right now</p>
 		</div>
 		<div>
 			<button mat-button (click)="startSearching()">FIND OPPONENT</button>
