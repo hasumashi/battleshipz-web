@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +49,7 @@ import { ShipPlaceholderComponent } from './shared/ship-placeholder/ship-placeho
 		MatDividerModule,
 		MatButtonModule,
 		MatProgressSpinnerModule,
+		DragDropModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

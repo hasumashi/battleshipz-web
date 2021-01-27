@@ -3,11 +3,33 @@
     --border-width: 4px;
     --cell-size: 50px;
     --ship-size: 1; // length of a ship (from component's @Input)
+    z-index: 1;
+}
+
+.ship-placeholder,
+.ship {
+    height: calc(var(--cell-size) + var(--border-width)); // XXX height doesn't match GameBoard cell size
+    width: calc(calc(var(--ship-size) * var(--cell-size)) + var(--border-width)); // XXX height doesn't match GameBoard cell size
+    border-radius: var(--border-width);
 }
 
 .ship-placeholder {
-    border: var(--border-width) dotted #a3a3a3;
-    height: var(--cell-size);
-    width: calc(var(--ship-size) * var(--cell-size));
-    margin-right: 2rem;
+    border: var(--border-width) dotted #808080; //#a3a3a3;
+    box-sizing: border-box;
+}
+
+.ship {
+    border: var(--border-width) solid var(--ship-border-color);
+    background: var(--ship-bg-color);
+    margin-top: calc(-1 * var(--border-width));
+    margin-left: calc(-1 * var(--border-width));
+}
+
+:host.cdk-drag-placeholder .ship {
+    opacity: 0;
+}
+
+.cdk-drag-preview .ship {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }

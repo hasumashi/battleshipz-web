@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -21,5 +22,9 @@ export class GameBoardComponent implements OnInit {
 		return Array(length).fill(startingChar).map((char, i) =>
 			String.fromCharCode(char.charCodeAt(0) + i)
 		);
+	}
+
+	shipDropped(event: CdkDragDrop<string[]>) {
+		console.log('SHIP DROP', event);
 	}
 }

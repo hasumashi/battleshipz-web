@@ -6,27 +6,34 @@
 
 .board {
     .h, .f {
+        display: flex;
         width: calc(var(--cell-size) - var(--border-width));
         height: calc(var(--cell-size) - var(--border-width));
         box-sizing: content-box;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .h { // header cell
         padding: calc(var(--border-width) / 2);
+        justify-content: center;
+        align-items: center;
     }
 
     .f { // field cell
-        background: var(--ship-bg-inactive);
-        border: var(--border-width) solid var(--ship-border-inactive);
+        background: var(--ship-bg-color-inactive);
+        border: var(--border-width) solid var(--ship-border-color-inactive);
         margin: calc(-0.5 * var(--border-width));
+
+        color: #777; // TODO remove
     }
 
     .row:nth-child(2) .f:nth-child(2) { border-radius: var(--board-radius) 0 0 0; }
     .row:nth-child(2) .f:last-child   { border-radius: 0 var(--board-radius) 0 0; }
     .row:last-child   .f:last-child   { border-radius: 0 0 var(--board-radius) 0; }
     .row:last-child   .f:nth-child(2) { border-radius: 0 0 0 var(--board-radius); }
+
+    ::ng-deep app-ship-placeholder {
+        margin: calc(-1 * var(--border-width));
+        pointer-events: none;
+    }
 }
+

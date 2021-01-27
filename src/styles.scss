@@ -8,13 +8,13 @@
     --fonts-sans: "DejaVu Sans", Helvetica, sans-serif;
 
     // Colors
-    --ship-bg: #00bcd425;
-    --ship-bg-dead: #90989b45; // TODO should have some opacity
-    --ship-bg-inactive: #f2f4f5;
+    --ship-bg-color: #00bcd425;
+    --ship-bg-color-dead: #90989b45; // TODO should have some opacity
+    --ship-bg-color-inactive: #f2f4f5;
 
-    --ship-border: #00838f;
-    --ship-border-dead: #484848;
-    --ship-border-inactive: #b9c7c7;
+    --ship-border-color: #00838f;
+    --ship-border-color-dead: #484848;
+    --ship-border-color-inactive: #b9c7c7;
 }
 
 *,
@@ -68,11 +68,11 @@ body {
 
 ::selection {
     color: #fff;
-    background: var(--ship-border);
+    background: var(--ship-border-color);
 }
 ::-moz-selection {
     color: #fff;
-    background: var(--ship-border);
+    background: var(--ship-border-color);
 }
 
 %decorative-pseudo-elem {
@@ -143,7 +143,7 @@ body {
     color: #ccc;
 }
 .color-ship-dark {
-    color: var(--ship-border);
+    color: var(--ship-border-color);
 }
 
 .material-icons.md-18 { font-size: 18px; }

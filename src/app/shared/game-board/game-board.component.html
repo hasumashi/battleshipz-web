@@ -4,8 +4,8 @@
 		<div class="h" *ngFor="let i of generateArray(size, 1)">{{i}}</div>
 	</div>
 
-	<div class="row" *ngFor="let row of generateCharArray(size, 'A')">
+	<div class="row" *ngFor="let row of generateCharArray(size, 'A'); index as i">
 		<div class="h">{{row}}</div>
-		<div class="f" *ngFor="let cell of generateArray(size)"></div>
+		<div class="f" cdkDropList (cdkDropListDropped)="shipDropped($event)" *ngFor="let cell of generateArray(size)" [id]="row+cell"></div>
 	</div>
 </div>

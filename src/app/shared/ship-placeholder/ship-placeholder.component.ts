@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ShipPlaceholderComponent implements OnInit {
 
 	@Input() size = 1;
+	@Input() content = '';
 
 	constructor() { }
 
