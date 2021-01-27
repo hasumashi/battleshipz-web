@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-prepare-board-view',
-  templateUrl: './prepare-board-view.component.html',
-  styleUrls: ['./prepare-board-view.component.scss']
+	selector: 'app-prepare-board-view',
+	templateUrl: './prepare-board-view.component.html',
+	styleUrls: ['./prepare-board-view.component.scss']
 })
 export class PrepareBoardViewComponent implements OnInit {
 
-  constructor() { }
+	opponentInfo = 'Your opponent is still preparing';
 
-  ngOnInit(): void {
-  }
+	constructor() { }
+
+	ngOnInit(): void { }
 
 }

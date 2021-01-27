@@ -21,6 +21,7 @@ import { PrepareBoardViewComponent } from './prepare-board-view/prepare-board-vi
 import { BattleViewComponent } from './battle-view/battle-view.component';
 import { GameBoardComponent } from './shared/game-board/game-board.component';
 import { ElsePipe } from './shared/else.pipe';
+import { ShipPlaceholderComponent } from './shared/ship-placeholder/ship-placeholder.component';
 
 @NgModule({
 	declarations: [
@@ -36,6 +37,7 @@ import { ElsePipe } from './shared/else.pipe';
 		BattleViewComponent,
 		GameBoardComponent,
 		ElsePipe,
+		ShipPlaceholderComponent,
 	],
 	imports: [
 		BrowserModule,

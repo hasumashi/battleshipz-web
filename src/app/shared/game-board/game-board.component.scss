@@ -20,8 +20,8 @@
     }
 
     .f { // field cell
-        background: #f2f4f5;
-        border: var(--border-width) solid #b9c7c7;
+        background: var(--ship-bg-inactive);
+        border: var(--border-width) solid var(--ship-border-inactive);
         margin: calc(-0.5 * var(--border-width));
     }
 

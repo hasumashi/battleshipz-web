@@ -1,0 +1,13 @@
+:host {
+    // TODO: DRY (same vars in GameBoardComponent)
+    --border-width: 4px;
+    --cell-size: 50px;
+    --ship-size: 1; // length of a ship (from component's @Input)
+}
+
+.ship-placeholder {
+    border: var(--border-width) dotted #a3a3a3;
+    height: var(--cell-size);
+    width: calc(var(--ship-size) * var(--cell-size));
+    margin-right: 2rem;
+}

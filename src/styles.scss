@@ -6,6 +6,15 @@
     --content-margin: 22vw; //20rem; TODO change name - used only in header now
     --fonts-display: "Comfortaa", Roboto, "DejaVu Sans", Helvetica, sans-serif;
     --fonts-sans: "DejaVu Sans", Helvetica, sans-serif;
+
+    // Colors
+    --ship-bg: #00bcd425;
+    --ship-bg-dead: #90989b45; // TODO should have some opacity
+    --ship-bg-inactive: #f2f4f5;
+
+    --ship-border: #00838f;
+    --ship-border-dead: #484848;
+    --ship-border-inactive: #b9c7c7;
 }
 
 *,
@@ -46,7 +55,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: normal;
-    margin-top: 1rem;
+    margin: 1rem 0 3rem;
 }
 
 
@@ -57,6 +66,14 @@ body {
     font-family: var(--fonts-sans);
 }
 
+::selection {
+    color: #fff;
+    background: var(--ship-border);
+}
+::-moz-selection {
+    color: #fff;
+    background: var(--ship-border);
+}
 
 %decorative-pseudo-elem {
     content: "";
@@ -113,17 +130,20 @@ body {
     transition: color 0.3s ease;
 }
 
-.material-icons.ok {
+.color-ok {
     color: #8bc34a;
 }
-.material-icons.warn {
+.color-warn {
     color: #ff9800;
 }
-.material-icons.danger {
+.color-danger {
     color: #f44336;
 }
-.material-icons.gray {
+.color-gray {
     color: #ccc;
+}
+.color-ship-dark {
+    color: var(--ship-border);
 }
 
 .material-icons.md-18 { font-size: 18px; }
