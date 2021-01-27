@@ -8,8 +8,8 @@
 
 .ship-placeholder,
 .ship {
-    height: calc(var(--cell-size) + var(--border-width)); // XXX height doesn't match GameBoard cell size
-    width: calc(calc(var(--ship-size) * var(--cell-size)) + var(--border-width)); // XXX height doesn't match GameBoard cell size
+    height: calc(var(--cell-size) + var(--border-width)); // XXX height didn't match GameBoard cell size
+    width: calc(calc(var(--ship-size) * var(--cell-size)) + var(--border-width)); // XXX height didn't match GameBoard cell size
     border-radius: var(--border-width);
 }
 
