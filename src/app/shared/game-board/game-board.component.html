@@ -1,2 +1,12 @@
 
-<p>game-board works!</p>
+<div class="board">
+	<div class="row">
+		<div class="h"></div>
+		<div class="h" *ngFor="let i of generateArray(size, 1)">{{i}}</div>
+	</div>
+
+	<div class="row" *ngFor="let row of generateCharArray(size, 'A')">
+		<div class="h">{{row}}</div>
+		<div class="f" *ngFor="let cell of generateArray(size)"></div>
+	</div>
+</div>

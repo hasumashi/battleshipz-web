@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-game-board',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameBoardComponent implements OnInit {
 
+	@Input() size = 10;
+
 	constructor() { }
 
-	ngOnInit(): void {
+	ngOnInit(): void { }
+
+	generateArray(length: number, from: number = 0) {
+		return Array(length).fill(0).map((_,i) => from + i);
 	}
 
+	generateCharArray(length: number, startingChar: string): string[] {
+		return Array(length).fill(startingChar).map((char, i) =>
+			String.fromCharCode(char.charCodeAt(0) + i)
+		);
+	}
 }
