@@ -1,5 +1,6 @@
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { AvailableShips, ShipPlacementService } from '../shared/game-board/ship-placement.service';
 
 @Component({
 	selector: 'app-prepare-board-view',
@@ -13,12 +14,21 @@ export class PrepareBoardViewComponent implements OnInit {
 	private boardSize = 10;
 	boardFiledIds = this.generateFieldCoords(this.boardSize);
 
-	availableShips = [
+	availableShips: AvailableShips[] = [
 		{size: 4, count: 1},
 		{size: 3, count: 2},
 		{size: 2, count: 3},
 		{size: 1, count: 4},
 	];
+
+
+	constructor(private placementService: ShipPlacementService) { }
+
+	ngOnInit(): void { }
+
+	allShipsUsed() {
+		return this.availableShips.every(x => x.count === 0);
+	}
 
 	generateFieldCoords(boardSize: number): string[] {
 		const coords = Array(boardSize).fill('').map((row,y) => {
@@ -50,13 +60,25 @@ export class PrepareBoardViewComponent implements OnInit {
 		console.log('PREP:EXIT2', event);
 	}
 
-	constructor() { }
-
-	ngOnInit(): void { }
+	private getRandomInt(min: number, max: number): number {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
 	arrangeShipsRandomly() {
-		console.log('TODO');
-		// this.availableShips[1]--;
-		this.availableShips[3].count--;
+		while (!this.allShipsUsed()) {
+			const col = this.getRandomInt(0, 9).toString();
+			const row = String.fromCharCode('A'.charCodeAt(0) + this.getRandomInt(0, 9));
+			const field = row + col;
+
+			// const newShipConfig: ShipConfig
+
+			console.log(field)
+		}
+	}
+
+	playerReady() {
+		console.log('Marked as ready')
 	}
 }

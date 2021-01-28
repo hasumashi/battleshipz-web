@@ -30,7 +30,12 @@
 	</div>
 
 	<div class="column align-cross-center padding">
-		<button mat-raised-button disabled="true"><em>Place all your ships</em></button>
+		<button mat-raised-button [disabled]="!allShipsUsed()" (click)="playerReady()">
+			<em *ngIf="!allShipsUsed(); else readyButtonText">Place all your ships</em>
+			<ng-template #readyButtonText><span>Get ready</span></ng-template>
+		</button>
 		<p class="description">{{opponentInfo}}</p>
 	</div>
+
+	{{availableShips | json}}
 </div>
