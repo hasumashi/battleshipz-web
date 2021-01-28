@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 export type ShipPlacement = {[field: string]: ShipConfig}; //Map<string, ShipConfig>;
@@ -28,7 +29,9 @@ export class ShipPlacementService {
 	private opponentPlacementSource = new BehaviorSubject<ShipPlacement>({});
 	opponentPlacement$ = this.opponentPlacementSource.asObservable();
 
-	constructor() { }
+	constructor(private socket: Socket) {
+		// this.socket.fromEvent('playersOnline').subscribe(playersOnline => console.log(`There are ${playersOnline} players online`));
+	}
 
 	setBoardSize(size: number) {
 		this.boardSize = size;

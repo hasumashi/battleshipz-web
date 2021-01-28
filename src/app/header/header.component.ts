@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
 	selector: 'app-header',
@@ -9,7 +10,12 @@ export class HeaderComponent implements OnInit {
 
 	playersOnline: number = 0;
 
-	constructor() { }
+	constructor(private socket: Socket) {
+		socket.on('playersOnline', (online: number) => {
+			console.log('[socket.io] Players online:', online);
+			this.playersOnline = online;
+		});
+	}
 
 	ngOnInit(): void {
 	}

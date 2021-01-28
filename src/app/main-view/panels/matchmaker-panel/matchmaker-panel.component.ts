@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
 
 enum MatchmakingState {
 	Idle,
@@ -36,7 +37,12 @@ export class MatchmakerPanelComponent implements OnInit {
 		}
 	};
 
-	constructor(private router: Router) { }
+	constructor(private router: Router, private socket: Socket) {
+		socket.on('playersOnline', (online: number) => {
+			console.log('[socket.io] Players online:', online);
+			this.playersAvailable = Math.max(0, online - 1);
+		});
+	}
 
 	ngOnInit(): void {
 	}
@@ -48,7 +54,7 @@ export class MatchmakerPanelComponent implements OnInit {
 		// TODO mocked navigation
 		setTimeout(() => {
 			this.router.navigate(['/prepare']);
-		}, 5500);
+		}, 800);
 	}
 
 	cancelSearching() {

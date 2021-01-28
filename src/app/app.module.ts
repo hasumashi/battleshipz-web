@@ -8,6 +8,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { environment as env } from './../environments/environment';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: env.apiUrl, options: {} };
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -43,6 +47,7 @@ import { ShipPlaceholderComponent } from './shared/ship-placeholder/ship-placeho
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
+		SocketIoModule.forRoot(config),
 
 		// Angular Material
 		MatCardModule,

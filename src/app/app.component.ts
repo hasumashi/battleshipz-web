@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
 	selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 	title = 'battleshipz-web';
+
+	constructor(private socket: Socket) {
+		// socket.on('connect', () => {
+		// 	console.log('[socket.io] Connected')
+		// })
+	}
 }
