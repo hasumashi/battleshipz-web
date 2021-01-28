@@ -1,7 +1,8 @@
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AvailableShip, ShipPlacementService } from '../shared/game-board/ship-placement.service';
+import { Socket } from 'ngx-socket-io';
+import { AvailableShip, ShipConfig, ShipPlacement, ShipPlacementService } from '../shared/game-board/ship-placement.service';
 
 @Component({
 	selector: 'app-prepare-board-view',
@@ -11,14 +12,27 @@ import { AvailableShip, ShipPlacementService } from '../shared/game-board/ship-p
 export class PrepareBoardViewComponent implements OnInit {
 
 	opponentInfo = 'Your opponent is still preparing';
+	markedAsReady = false;
 
 	private boardSize = 10;
 	boardFiledIds = this.generateFieldCoords(this.boardSize);
 
 	availableShips: AvailableShip[] = this.startingAvailableShips();
+	shipsPlaced: ShipPlacement = {};
 
 
-	constructor(private placementService: ShipPlacementService, private router: Router) { }
+	constructor(private placementService: ShipPlacementService, private router: Router, private socket: Socket) {
+		this.socket.on('opponent:ready', () => {
+			this.opponentInfo = 'Your opponent is ready!';
+		});
+
+		this.socket.on('game:start', (info: any) => {
+			console.log(info.first);
+			this.router.navigate(['/battle']);
+		})
+
+		this.placementService.placementChanged$.subscribe(placement => this.shipsPlaced = placement);
+	}
 
 	ngOnInit(): void { }
 
@@ -72,7 +86,9 @@ export class PrepareBoardViewComponent implements OnInit {
 	}
 
 	playerReady() {
-		console.log('Marked as ready')
-		this.router.navigate(['/battle']);
+		console.log('Marked as ready');
+		this.opponentInfo = 'Waiting for opponent…';
+		this.markedAsReady = true;
+		this.socket.emit('player:ready', this.shipsPlaced);
 	}
 }

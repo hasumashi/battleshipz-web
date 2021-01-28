@@ -30,7 +30,7 @@
 	</div>
 
 	<div class="column align-cross-center padding">
-		<button mat-raised-button [disabled]="!allShipsUsed()" (click)="playerReady()">
+		<button mat-raised-button [disabled]="!allShipsUsed() || markedAsReady" (click)="playerReady()">
 			<em *ngIf="!allShipsUsed(); else readyButtonText">Place all your ships</em>
 			<ng-template #readyButtonText><span>Get ready</span></ng-template>
 		</button>

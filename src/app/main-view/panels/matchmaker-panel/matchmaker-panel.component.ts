@@ -39,9 +39,12 @@ export class MatchmakerPanelComponent implements OnInit {
 
 	constructor(private router: Router, private socket: Socket) {
 		socket.on('playersOnline', (online: number) => {
-			console.log('[socket.io] Players online:', online);
 			this.playersAvailable = Math.max(0, online - 1);
 		});
+
+		socket.on('game:ready', () => {
+			this.router.navigate(['/prepare']);
+		})
 	}
 
 	ngOnInit(): void {
@@ -51,10 +54,12 @@ export class MatchmakerPanelComponent implements OnInit {
 		this.matchmakingState = MatchmakingState.Searching;
 		this.timer.startTimer();
 
+		this.socket.emit('game:request');
+
 		// TODO mocked navigation
-		setTimeout(() => {
-			this.router.navigate(['/prepare']);
-		}, 800);
+		// setTimeout(() => {
+		// 	this.router.navigate(['/prepare']);
+		// }, 800);
 	}
 
 	cancelSearching() {
