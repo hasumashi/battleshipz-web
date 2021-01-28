@@ -9,8 +9,8 @@
 			</em>
 			<div class="ships-group column">
 				<div class="row padding" *ngFor="let ships of availableShips"
-					cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="boardFiledIds"
-					(cdkDropListDropped)="shipDrop($event)" (cdkDropListExited)="shipExit($event)" (cdkDropListEntered)="shipEnter($event)">
+					cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="boardFiledIds">
+					<!-- (cdkDropListDropped)="shipDrop($event)" (cdkDropListExited)="shipExit($event)" (cdkDropListEntered)="shipEnter($event)"> -->
 
 					<app-ship-placeholder *ngFor="let i of [].constructor(ships.count)" cdkDrag [cdkDragData]="ships"
 						[size]="ships.size" [content]="ships.size.toString()"></app-ship-placeholder>

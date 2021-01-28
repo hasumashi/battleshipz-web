@@ -9,7 +9,7 @@ export interface ShipConfig {
 	horizontal: boolean,
 }
 
-export interface AvailableShips {
+export interface AvailableShip {
 	size: number,
 	count: number,
 }
@@ -40,8 +40,47 @@ export class ShipPlacementService {
 		return false;
 	}
 
-	addShipsRandomly(shipsAvailable: any) {
+	// TODO DRY
+	private allShipsUsed(availableShips: AvailableShip[]) {
+		return availableShips.every(x => x.count === 0);
+	}
+	private getRandomInt(min: number, max: number): number {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
+	private getRandomAvailableShip(shipsAvailable: AvailableShip[]): AvailableShip | undefined {
+		return shipsAvailable.find(x => x.count !== 0);
+	}
+
+	addShipsRandomly(shipsAvailable: AvailableShip[]) {
+		while (!this.allShipsUsed(shipsAvailable)) {
+			const col = this.getRandomInt(0, 9).toString();
+			const row = String.fromCharCode('A'.charCodeAt(0) + this.getRandomInt(0, 9));
+			const field = row + col;
+			console.log(field)
+
+			const availableShip = this.getRandomAvailableShip(shipsAvailable);
+			if (!availableShip)
+				break;
+
+			const newShipConfig: ShipConfig = {
+				field,
+				horizontal: (Math.random() > 0.5),
+				size: availableShip?.size,
+			};
+			if (this.addShip(newShipConfig)) {
+				availableShip.count -= 1;
+			}
+		}
+
+		this.placementChangedSource.next(this.shipsPlaced);
+	}
+
+	clearAllShips() {
+		this.shipsPlaced = {};
+		this.placementChangedSource.next(this.shipsPlaced);
 	}
 
 	checkCollisions(shipConfig: ShipConfig): boolean {
