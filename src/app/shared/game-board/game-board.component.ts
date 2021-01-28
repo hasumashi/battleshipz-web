@@ -2,6 +2,10 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { ShipConfig, ShipPlacement, ShipPlacementService } from './ship-placement.service';
 
+export enum BoardType {
+	Player,
+	Opponent,
+}
 
 @Component({
 	selector: 'app-game-board',
@@ -11,6 +15,7 @@ import { ShipConfig, ShipPlacement, ShipPlacementService } from './ship-placemen
 export class GameBoardComponent implements OnInit {
 
 	@Input() size = 10;
+	@Input() type = BoardType.Player;
 
 	shipsPlaced: ShipPlacement = {};
 
@@ -18,7 +23,10 @@ export class GameBoardComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.placementService.setBoardSize(this.size);
-		this.placementService.placementChanged$.subscribe(placement => this.shipsPlaced = placement);
+		const placement$ = (this.type === BoardType.Player) ?
+			this.placementService.placementChanged$ :
+			this.placementService.opponentPlacement$;
+		placement$.subscribe(placement => this.shipsPlaced = placement);
 	}
 
 	generateArray(length: number, from: number = 0) {

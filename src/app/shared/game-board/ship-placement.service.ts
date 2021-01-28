@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export type ShipPlacement = {[field: string]: ShipConfig}; //Map<string, ShipConfig>;
 
@@ -22,8 +22,11 @@ export class ShipPlacementService {
 	shipsPlaced: ShipPlacement = {};
 	boardSize: number = 10;
 
-	private placementChangedSource = new Subject<ShipPlacement>();
+	private placementChangedSource = new BehaviorSubject<ShipPlacement>({});
 	placementChanged$ = this.placementChangedSource.asObservable();
+
+	private opponentPlacementSource = new BehaviorSubject<ShipPlacement>({});
+	opponentPlacement$ = this.opponentPlacementSource.asObservable();
 
 	constructor() { }
 

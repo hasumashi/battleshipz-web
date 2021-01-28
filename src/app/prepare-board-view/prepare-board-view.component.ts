@@ -1,5 +1,6 @@
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AvailableShip, ShipPlacementService } from '../shared/game-board/ship-placement.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class PrepareBoardViewComponent implements OnInit {
 	availableShips: AvailableShip[] = this.startingAvailableShips();
 
 
-	constructor(private placementService: ShipPlacementService) { }
+	constructor(private placementService: ShipPlacementService, private router: Router) { }
 
 	ngOnInit(): void { }
 
@@ -72,5 +73,6 @@ export class PrepareBoardViewComponent implements OnInit {
 
 	playerReady() {
 		console.log('Marked as ready')
+		this.router.navigate(['/battle']);
 	}
 }

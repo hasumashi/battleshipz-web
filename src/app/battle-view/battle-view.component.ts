@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardType } from '../shared/game-board/game-board.component';
 
 @Component({
-  selector: 'app-battle-view',
-  templateUrl: './battle-view.component.html',
-  styleUrls: ['./battle-view.component.scss']
+	selector: 'app-battle-view',
+	templateUrl: './battle-view.component.html',
+	styleUrls: ['./battle-view.component.scss']
 })
 export class BattleViewComponent implements OnInit {
 
-  constructor() { }
+	headline = 'Battle!';
+	BoardType = BoardType;
 
-  ngOnInit(): void {
-  }
+	constructor() { }
+
+	ngOnInit(): void { }
 
 }

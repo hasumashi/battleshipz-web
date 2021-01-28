@@ -1,1 +1,13 @@
-<p>battle-view works!</p>
+<h1>{{headline}}</h1>
+
+<div class="column grow">
+	<div class="row grow align-start align-cross-baseline">
+		<div class="size-1-2 column align-cross-center padding">
+			<app-game-board [type]="BoardType.Player"></app-game-board>
+		</div>
+
+		<div class="size-1-2 flex align-center">
+			<app-game-board [type]="BoardType.Opponent"></app-game-board>
+		</div>
+	</div>
+</div>
