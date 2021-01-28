@@ -28,6 +28,10 @@ export class GameBoardComponent implements OnInit {
 		return Array(length).fill(0).map((_,i) => from + i);
 	}
 
+	generateFieldsArray(length: number, rowChar: string, from: number = 0) {
+		return Array(length).fill(rowChar).map((x,i) => x + (from + i));
+	}
+
 	generateCharArray(length: number, startingChar: string): string[] {
 		return Array(length).fill(startingChar).map((char, i) =>
 			String.fromCharCode(char.charCodeAt(0) + i)
@@ -55,7 +59,25 @@ export class GameBoardComponent implements OnInit {
 		}
 	}
 
-	private getOffsetField(field: string, y: number, x: number) {
+	rotateShip(field: string) {
+		const oldConfig = this.shipsPlaced[field];
+		delete this.shipsPlaced[field];
+		const newConfig = {
+			...oldConfig,
+			horizontal: !oldConfig.horizontal,
+		};
+		console.log(newConfig);
+		if (this.checkCollisions(newConfig)) {
+			this.shipsPlaced[field] = oldConfig;
+			console.log('cannot rotate - collisions :/')
+		} else {
+			this.shipsPlaced[field] = newConfig;
+			console.log('rotated')
+		}
+	}
+
+	private getOffsetField(field: string, offset: [number, number]) {
+		const [y, x] = offset;
 		const firstLetter = 'A'.charCodeAt(0);
 		const row = field[0].charCodeAt(0) - firstLetter;
 		const col = parseInt(field[1]);
@@ -64,29 +86,33 @@ export class GameBoardComponent implements OnInit {
 
 	private checkCollidingFields(field: string) {
 		const collidingFields = [
+			this.getOffsetField(field, [-1, -1]),
+			this.getOffsetField(field, [-1,  0]),
+			this.getOffsetField(field, [-1,  1]),
+			this.getOffsetField(field, [ 0, -1]),
 			field,
-			this.getOffsetField(field, -1, -1),
-			this.getOffsetField(field, -1,  0),
-			this.getOffsetField(field, -1,  1),
-			this.getOffsetField(field,  0, -1),
-			this.getOffsetField(field,  0,  1),
-			this.getOffsetField(field,  1, -1),
-			this.getOffsetField(field,  1,  0),
-			this.getOffsetField(field,  1,  1),
+			this.getOffsetField(field, [ 0,  1]),
+			this.getOffsetField(field, [ 1, -1]),
+			this.getOffsetField(field, [ 1,  0]),
+			this.getOffsetField(field, [ 1,  1]),
 		];
 		return collidingFields.some(cf => this.shipsPlaced[cf]);
 	}
 
 	private checkCollisions(shipConfig: ShipConfig): boolean {
 		const { field } = shipConfig;
-		const row = field[0];
-		const col = field[1];
+		const row = field[0].charCodeAt(0) - 'A'.charCodeAt(0);
+		const col = parseInt(field[1]);
 
-		if (parseInt(col) + shipConfig.size > 10)
+		if (shipConfig.horizontal && col + shipConfig.size > this.size)
+			return true;
+
+		if (!shipConfig.horizontal && row + shipConfig.size > this.size)
 			return true;
 
 		for (let i = 0; i < shipConfig.size; i++) {
-			if (this.checkCollidingFields(this.getOffsetField(field, 0, i))) {
+			const offset: [number, number] = shipConfig.horizontal ? [0,i] : [i,0]
+			if (this.checkCollidingFields(this.getOffsetField(field, offset))) {
 				return true;
 			}
 		}
@@ -94,6 +120,7 @@ export class GameBoardComponent implements OnInit {
 		return false;
 	}
 
+	// TODO unused
 	canDropPredicate(item: CdkDrag<any>) {
 		return this.checkCollisions({
 			field: '??',

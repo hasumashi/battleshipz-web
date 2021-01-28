@@ -7,9 +7,10 @@
 	<div class="row" *ngFor="let row of generateCharArray(size, 'A'); index as i">
 		<div class="h">{{row}}</div>
 		<div class="f" cdkDropList (cdkDropListDropped)="shipDropped($event)"
-			*ngFor="let cell of generateArray(size)" [id]="row+cell">
+			*ngFor="let field of generateFieldsArray(size, row)" [id]="field">
 
-			<app-ship-placeholder *ngIf="shipsPlaced[row+cell]" [size]="shipsPlaced[row+cell].size"></app-ship-placeholder>
+			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
+				(click)="rotateShip(field)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>
 		</div>
 	</div>
 </div>

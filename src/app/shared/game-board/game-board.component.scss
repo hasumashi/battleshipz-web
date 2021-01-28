@@ -33,7 +33,15 @@
 
     ::ng-deep app-ship-placeholder {
         margin: calc(-1 * var(--border-width));
-        pointer-events: none;
+
+        &.cdk-drag-placeholder {
+            pointer-events: none;
+        }
+
+        &.rotated {
+            transform: rotate(90deg) translate(-54px, 0);
+            transform-origin: bottom left;
+        }
     }
 }
 
