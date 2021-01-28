@@ -22,12 +22,29 @@ export class ShipPlacementService {
 
 	shipsPlaced: ShipPlacement = {};
 	boardSize: number = 10;
+	playingFirst = false;
 
 	private placementChangedSource = new BehaviorSubject<ShipPlacement>({});
 	placementChanged$ = this.placementChangedSource.asObservable();
 
 	private opponentPlacementSource = new BehaviorSubject<ShipPlacement>({});
 	opponentPlacement$ = this.opponentPlacementSource.asObservable();
+
+	setPlayingFirst(isFirst: boolean) {
+		this.playingFirst = isFirst;
+	}
+
+	onOpponentShot() {
+		return this.socket.fromEvent<any>('opponent:shot');
+	}
+
+	onHit() {
+		return this.socket.fromEvent<any>('player:hit');
+	}
+
+	onGameEnd() {
+		return this.socket.fromEvent<any>('game:end');
+	}
 
 	constructor(private socket: Socket) {
 		// this.socket.fromEvent('playersOnline').subscribe(playersOnline => console.log(`There are ${playersOnline} players online`));

@@ -6,8 +6,9 @@
 
 	<div class="row" *ngFor="let row of generateCharArray(size, 'A'); index as i">
 		<div class="h">{{row}}</div>
-		<div class="f" cdkDropList (cdkDropListDropped)="shipDropped($event)"
+		<div class="f" cdkDropList (cdkDropListDropped)="shipDropped($event)" (click)="hit(field)"
 			*ngFor="let field of generateFieldsArray(size, row)" [id]="field">
+			<i class="material-icons" style="position: absolute;" *ngIf="boardHits(field)">close</i>
 
 			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
 				(click)="rotateShip(field)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>

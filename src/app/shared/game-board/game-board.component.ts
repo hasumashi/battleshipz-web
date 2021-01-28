@@ -1,5 +1,6 @@
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 import { ShipConfig, ShipPlacement, ShipPlacementService } from './ship-placement.service';
 
 export enum BoardType {
@@ -16,10 +17,28 @@ export class GameBoardComponent implements OnInit {
 
 	@Input() size = 10;
 	@Input() type = BoardType.Player;
+	@Input() battle = false;
 
 	shipsPlaced: ShipPlacement = {};
 
-	constructor(private placementService: ShipPlacementService) { }
+	_boardHits: {[field: string]: boolean} = {};
+	opponentBoardHits: {[field: string]: boolean} = {};
+
+	boardHits(field: string) {
+		return this._boardHits[field];
+		// if (this.type === BoardType.Player)
+		// 	return this.playerBoardHits[field];
+		// else
+		// 	return this.opponentBoardHits[field];
+	}
+
+	constructor(private placementService: ShipPlacementService, private socket: Socket) {
+		this.placementService.onHit().subscribe(shot => {
+			if (shot.hit) {
+				this._boardHits[shot.field] = true;
+			}
+		})
+	}
 
 	ngOnInit(): void {
 		this.placementService.setBoardSize(this.size);
@@ -27,6 +46,15 @@ export class GameBoardComponent implements OnInit {
 			this.placementService.placementChanged$ :
 			this.placementService.opponentPlacement$;
 		placement$.subscribe(placement => this.shipsPlaced = placement);
+
+		this.placementService.onOpponentShot
+	}
+
+	hit(field: string) {
+		if (this.battle) {
+			this.socket.emit('player:shoot', field);
+			// this._boardHits[field] = true;
+		}
 	}
 
 	generateArray(length: number, from: number = 0) {

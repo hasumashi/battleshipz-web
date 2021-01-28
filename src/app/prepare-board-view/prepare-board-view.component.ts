@@ -28,6 +28,7 @@ export class PrepareBoardViewComponent implements OnInit {
 
 		this.socket.on('game:start', (info: any) => {
 			console.log(info.first);
+			this.placementService.setPlayingFirst(info.first);
 			this.router.navigate(['/battle']);
 		})
 
