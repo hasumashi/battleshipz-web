@@ -83,7 +83,6 @@ export class ShipPlacementService {
 			const col = this.getRandomInt(0, 9).toString();
 			const row = String.fromCharCode('A'.charCodeAt(0) + this.getRandomInt(0, 9));
 			const field = row + col;
-			console.log(field)
 
 			const availableShip = this.getRandomAvailableShip(shipsAvailable);
 			if (!availableShip)
@@ -154,11 +153,13 @@ export class ShipPlacementService {
 		if (this.checkCollisions(newConfig)) {
 			this.shipsPlaced[field] = oldConfig;
 			console.log('cannot rotate - collisions :/')
+			return false;
 		} else {
 			this.shipsPlaced[field] = newConfig;
 			this.placementChangedSource.next(this.shipsPlaced);
 			console.log('rotated')
 		}
+		return true;
 	}
 
 	generateFieldCoords(boardSize: number): string[] {
@@ -185,7 +186,6 @@ export class ShipPlacementService {
 			[row+1, col  ],
 			[row+1, col+1],
 		];
-		console.log('collidingFields', collidingFields)
 		return collidingFields.some(([y,x]) => grid[y]?.[x]);
 	}
 

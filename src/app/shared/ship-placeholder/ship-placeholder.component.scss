@@ -3,6 +3,7 @@
     --border-width: 4px;
     --cell-size: 50px;
     --ship-size: 1; // length of a ship (from component's @Input)
+    --rotation-origin: calc(var(--cell-size) / 2 + var(--border-width) / 2);
     z-index: 1;
 }
 
@@ -16,6 +17,8 @@
 .ship-placeholder {
     border: var(--border-width) dotted #808080; //#a3a3a3;
     box-sizing: border-box;
+    transition: transform 0.3s ease;
+    transform-origin: var(--rotation-origin);
 }
 
 .ship {
@@ -35,6 +38,19 @@
 }
 
 :host.rotated .ship-placeholder {
-    transform: rotate(90deg) translate(-54px, 0);
-    transform-origin: bottom left;
+    transform: rotate(90deg);
+}
+
+:host.anim-shake-rotate {
+    animation: shake-rotate 0.5s ease-out normal; // 0 0 0 none;
+    transform-origin: var(--rotation-origin);
+}
+
+@keyframes shake-rotate {
+    from { transform: rotate(0); }
+    20% { transform: rotate(2deg); }
+    40% { transform: rotate(-2deg); }
+    60% { transform: rotate(2deg); }
+    80% { transform: rotate(-2deg); }
+    to { transform: rotate(0); }
 }

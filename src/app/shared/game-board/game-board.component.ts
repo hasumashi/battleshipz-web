@@ -108,7 +108,13 @@ export class GameBoardComponent implements OnInit {
 		}
 	}
 
-	rotateShip(field: string) {
-		this.placementService.rotateShip(field);
+	rotateShip(field: string, event: any) {
+		const target = event.currentTarget;
+		target.classList.remove('anim-shake-rotate');
+		setTimeout(() => {
+			if (this.placementService.rotateShip(field) === false) {
+				target.classList.add('anim-shake-rotate')
+			}
+		});
 	}
 }

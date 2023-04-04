@@ -15,7 +15,7 @@
 
 			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
 				cdkDrag [cdkDragData]="shipsPlaced[field]"
-				(click)="rotateShip(field)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>
+				(click)="rotateShip(field, $event)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>
 		</div>
 	</div>
 </div>
