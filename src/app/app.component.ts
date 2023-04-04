@@ -10,8 +10,8 @@ export class AppComponent {
 	title = 'battleshipz-web';
 
 	constructor(private socket: Socket) {
-		// socket.on('connect', () => {
-		// 	console.log('[socket.io] Connected')
-		// })
+		socket.on('connect', () => {
+			console.log('[socket.io] Connected')
+		})
 	}
 }

@@ -37,11 +37,5 @@
         &.cdk-drag-placeholder {
             pointer-events: none;
         }
-
-        &.rotated {
-            transform: rotate(90deg) translate(-54px, 0);
-            transform-origin: bottom left;
-        }
     }
 }
-

@@ -1,5 +1,5 @@
-import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ShipConfig, ShipPlacement, ShipPlacementService } from './ship-placement.service';
 
@@ -23,6 +23,8 @@ export class GameBoardComponent implements OnInit {
 
 	_boardHits: {[field: string]: boolean} = {};
 	opponentBoardHits: {[field: string]: boolean} = {};
+
+	boardFiledIds = this.placementService.generateFieldCoords(10);
 
 	boardHits(field: string) {
 		return this._boardHits[field];
@@ -72,21 +74,36 @@ export class GameBoardComponent implements OnInit {
 	}
 
 	shipDropped(event: CdkDragDrop<string[]>) {
+		const eventData = event.item.data;
 		console.log('GameBoard:DROP', event);
+		console.log(' - eventData:', eventData);
 
-		const availableShips = event.item.data;
-		console.log(availableShips);
-
-		if (event.container !== event.previousContainer) {
-			const targetField = event.container.id;
+		if (event.container === event.previousContainer) {
+			return;
+		}
+		const targetField = event.container.id;
+		if (eventData.placed) {
+			// moving already placed ship
+			const oldShipConfig = eventData as ShipConfig;
+			const movedShipConfig: ShipConfig = {
+				...oldShipConfig,
+				field: targetField,
+			};
+			this.placementService.removeShip(oldShipConfig.field);;
+			if (!this.placementService.addShip(movedShipConfig))
+				this.placementService.addShip(oldShipConfig);
+			return;
+		} else {
+			// adding new ship
 			const newShipConfig: ShipConfig = {
 				field: targetField,
-				size: availableShips.size,
+				size: eventData.size,
 				horizontal: true,
+				placed: true,
 			};
 
 			if (this.placementService.addShip(newShipConfig)) {
-				availableShips.count -= 1;
+				eventData.count -= 1;
 			}
 		}
 	}
@@ -94,14 +111,4 @@ export class GameBoardComponent implements OnInit {
 	rotateShip(field: string) {
 		this.placementService.rotateShip(field);
 	}
-
-
-	// TODO unused
-	// canDropPredicate(item: CdkDrag<any>) {
-	// 	return this.placementService.checkCollisions({
-	// 		field: '??',
-	// 		size: item.data.size,
-	// 		horizontal: true,
-	// 	});
-	// }
 }

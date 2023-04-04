@@ -62,27 +62,14 @@ export class PrepareBoardViewComponent implements OnInit {
 		return coords.flat();
 	}
 
-	// shipDrop(event: CdkDragDrop<string[]>) {
-	// 	// moveItemInArray(this.ships, event.previousIndex, event.currentIndex);
-	// 	console.log('PREP:DROP', event.previousIndex, event.currentIndex, event);
-	// 	const shipConfig = event.item.data;
-	// 	if (event.previousContainer != event.container) {
-	// 		console.log('Decrementing', shipConfig.count)
-	// 		shipConfig.count -= 1;
-	// 	}
-	// }
 
-	// shipEnter(event: CdkDragEnter<any>) {
-	// 	console.log('PREP:ENTER2', event);
-	// }
-
-	// shipExit(event: CdkDragExit<any, any>) {
-	// 	console.log('PREP:EXIT2', event);
-	// }
-
-	arrangeShipsRandomly() {
+	resetShips() {
 		this.availableShips = this.startingAvailableShips();
 		this.placementService.clearAllShips();
+	}
+
+	arrangeShipsRandomly() {
+		this.resetShips();
 		this.placementService.addShipsRandomly(this.availableShips);
 	}
 

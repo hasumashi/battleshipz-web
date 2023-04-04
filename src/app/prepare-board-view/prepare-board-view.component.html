@@ -2,23 +2,26 @@
 
 <div class="column grow">
 	<div class="row grow align-start align-cross-baseline">
-		<div class="size-1-2 column align-cross-center padding">
+		<div class="size-1-2 column align-cross-center padding h-1-1">
 			<em class="description padding" style="max-width: 70%">
 				Drag and drop the ships to&nbsp;place them on&nbsp;board
 				and&nbsp;then click them to&nbsp;rotate
 			</em>
-			<div class="ships-group column">
+			<div class="ships-group column h-1-1 p-relative">
 				<div class="row padding" *ngFor="let ships of availableShips"
-					cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="boardFiledIds">
+					cdkDropList cdkDropListOrientation="horizontal" [cdkDropListSortingDisabled]="true" [cdkDropListConnectedTo]="boardFiledIds">
 					<!-- (cdkDropListDropped)="shipDrop($event)" (cdkDropListExited)="shipExit($event)" (cdkDropListEntered)="shipEnter($event)"> -->
 
 					<app-ship-placeholder *ngFor="let i of [].constructor(ships.count)" cdkDrag [cdkDragData]="ships"
 						[size]="ships.size" [content]="ships.size.toString()"></app-ship-placeholder>
 				</div>
 
-				<div class="button-group">
+				<div class="button-group p-bottom">
 					<button mat-button class="color-ship-dark" (click)="arrangeShipsRandomly()">
 						<i class="material-icons">shuffle</i> ARRANGE RANDOMLY
+					</button>
+					<button mat-button class="color-ship-dark" (click)="resetShips()">
+						<i class="material-icons">restart_alt</i> RESET
 					</button>
 				</div>
 			</div>

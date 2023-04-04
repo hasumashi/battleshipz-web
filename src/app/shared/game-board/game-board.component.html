@@ -1,4 +1,4 @@
-<div class="board">
+<div class="board p-relative">
 	<div class="row">
 		<div class="h"></div>
 		<div class="h" *ngFor="let i of generateArray(size, 1)">{{i}}</div>
@@ -6,11 +6,15 @@
 
 	<div class="row" *ngFor="let row of generateCharArray(size, 'A'); index as i">
 		<div class="h">{{row}}</div>
-		<div class="f" cdkDropList (cdkDropListDropped)="shipDropped($event)" (click)="hit(field)"
+		<div class="f"
+			cdkDropList (cdkDropListDropped)="shipDropped($event)"
+			[cdkDropListConnectedTo]="boardFiledIds"
+			(click)="hit(field)"
 			*ngFor="let field of generateFieldsArray(size, row)" [id]="field">
 			<i class="material-icons" style="position: absolute;" *ngIf="boardHits(field)">close</i>
 
 			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
+				cdkDrag [cdkDragData]="shipsPlaced[field]"
 				(click)="rotateShip(field)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>
 		</div>
 	</div>

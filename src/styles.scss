@@ -158,6 +158,11 @@ body {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
+// Helpers
+.p-relative { position: relative; }
+.p-top { position: absolute; top: 0; }
+.p-bottom { position: absolute; bottom: 0; }
+
 
 // Breakpoints
 @media (max-width: 1400px) {

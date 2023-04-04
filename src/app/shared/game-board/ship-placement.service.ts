@@ -8,6 +8,7 @@ export interface ShipConfig {
 	field: string,
 	size: number,
 	horizontal: boolean,
+	placed: true,
 }
 
 export interface AvailableShip {
@@ -92,6 +93,7 @@ export class ShipPlacementService {
 				field,
 				horizontal: (Math.random() > 0.5),
 				size: availableShip?.size,
+				placed: true,
 			};
 			if (this.addShip(newShipConfig)) {
 				availableShip.count -= 1;
@@ -108,8 +110,7 @@ export class ShipPlacementService {
 
 	checkCollisions(shipConfig: ShipConfig): boolean {
 		const { field } = shipConfig;
-		const row = field[0].charCodeAt(0) - 'A'.charCodeAt(0);
-		const col = parseInt(field[1]);
+		const [row, col] = this.parseFieldString(field);
 
 		if (shipConfig.horizontal && col + shipConfig.size > this.boardSize)
 			return true;
@@ -117,14 +118,29 @@ export class ShipPlacementService {
 		if (!shipConfig.horizontal && row + shipConfig.size > this.boardSize)
 			return true;
 
-		for (let i = 0; i < shipConfig.size; i++) {
-			const offset: [number, number] = shipConfig.horizontal ? [0,i] : [i,0]
-			if (this.checkCollidingFields(this.getOffsetField(field, offset))) {
-				return true;
+		const collisionGrid = this.generateBoardGrid();
+		if (shipConfig.horizontal) {
+			for (let i = 0; i < shipConfig.size; i++) {
+				if (this.checkCollidingFields(row, col + i, collisionGrid)) {
+					return true;
+				}
+			}
+		} else {
+			for (let i = 0; i < shipConfig.size; i++) {
+				if (this.checkCollidingFields(row + i, col, collisionGrid)) {
+					return true;
+				}
 			}
 		}
 
 		return false;
+	}
+
+	removeShip(field: string) {
+		const oldConfig = this.shipsPlaced[field];
+		delete this.shipsPlaced[field];
+		console.log('removed ship:', oldConfig)
+		return oldConfig;
 	}
 
 	rotateShip(field: string) {
@@ -145,26 +161,51 @@ export class ShipPlacementService {
 		}
 	}
 
-	private getOffsetField(field: string, offset: [number, number]) {
-		const [y, x] = offset;
-		const firstLetter = 'A'.charCodeAt(0);
-		const row = field[0].charCodeAt(0) - firstLetter;
-		const col = parseInt(field[1]);
-		return String.fromCharCode(row + y + firstLetter) + (col + x).toString();
+	generateFieldCoords(boardSize: number): string[] {
+		const coords = Array(boardSize).fill('').map((row,y) => {
+			return Array(boardSize).fill('').map((col,x) => {
+				const rowChar = String.fromCharCode('A'.charCodeAt(0) + y);
+				const colChar = x.toString();
+				return `${rowChar}${colChar}`;
+			})
+		})
+		console.log(coords.flat());
+		return coords.flat();
 	}
 
-	private checkCollidingFields(field: string) {
+	private checkCollidingFields(row: number, col: number, grid: number[][]) {
 		const collidingFields = [
-			this.getOffsetField(field, [-1, -1]),
-			this.getOffsetField(field, [-1,  0]),
-			this.getOffsetField(field, [-1,  1]),
-			this.getOffsetField(field, [ 0, -1]),
-			field,
-			this.getOffsetField(field, [ 0,  1]),
-			this.getOffsetField(field, [ 1, -1]),
-			this.getOffsetField(field, [ 1,  0]),
-			this.getOffsetField(field, [ 1,  1]),
+			[row-1, col-1],
+			[row-1, col  ],
+			[row-1, col+1],
+			[row  , col-1],
+			[row  , col],
+			[row  , col+1],
+			[row+1, col-1],
+			[row+1, col  ],
+			[row+1, col+1],
 		];
-		return collidingFields.some(cf => this.shipsPlaced[cf]);
+		console.log('collidingFields', collidingFields)
+		return collidingFields.some(([y,x]) => grid[y]?.[x]);
+	}
+
+	private parseFieldString(field: string): [number, number] {
+		return [
+			field.charCodeAt(0) - 'A'.charCodeAt(0),
+			+field.charAt(1),
+		];
+	}
+
+	private generateBoardGrid() {
+		const grid = Array(10).fill(null).map(() => Array(10).fill(false));
+		for (const shipConfig of Object.values(this.shipsPlaced)) {
+			const [row, col] = this.parseFieldString(shipConfig.field);
+			if (shipConfig.horizontal) {
+				for (let i = 0; i < shipConfig.size; i++) grid[row][col + i] = true;
+			} else {
+				for (let i = 0; i < shipConfig.size; i++) grid[row + i][col] = true;
+			}
+		}
+		return grid;
 	}
 }
