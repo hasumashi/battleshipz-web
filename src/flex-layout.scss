@@ -1,3 +1,5 @@
+@use "sass:math";
+
 /*
  * Helper SCSS for making layouts with Flexbox
  */
@@ -71,7 +73,7 @@
 @mixin size-X-Y {
     @for $y from 2 through 6 {
         @for $x from 1 through $y - 1 {
-            $size: $x/$y * 100%;
+            $size: math.div($x, $y) * 100%;
             .row > .size-#{$x}-#{$y} {
                 flex: 0 0 $size;
                 max-width: $size;
