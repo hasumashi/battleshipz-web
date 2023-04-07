@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { PlayersService } from '../shared/services/players.service';
 
 @Component({
 	selector: 'app-header',
@@ -10,14 +11,13 @@ export class HeaderComponent implements OnInit {
 
 	playersOnline: number = 0;
 
-	constructor(private socket: Socket) {
-		socket.on('playersOnline', (online: number) => {
-			console.log('[socket.io] Players online:', online);
-			this.playersOnline = online;
-		});
+	constructor(private playersService: PlayersService) {
 	}
 
 	ngOnInit(): void {
+		this.playersService.playersOnline$.subscribe((playersOnline) => {
+			this.playersOnline = playersOnline;
+		});
 	}
 
 }

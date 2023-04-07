@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
+import { PlayersService } from 'src/app/shared/services/players.service';
 
 enum MatchmakingState {
 	Idle,
@@ -37,9 +38,9 @@ export class MatchmakerPanelComponent implements OnInit {
 		}
 	};
 
-	constructor(private router: Router, private socket: Socket) {
-		socket.on('playersOnline', (online: number) => {
-			this.playersAvailable = Math.max(0, online - 1);
+	constructor(private router: Router, private socket: Socket, private playersService: PlayersService) {
+		this.playersService.playersOnline$.subscribe((playersOnline) => {
+			this.playersAvailable = Math.max(0, playersOnline - 1);
 		});
 
 		socket.on('game:ready', () => {
