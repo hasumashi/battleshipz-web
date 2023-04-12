@@ -1,8 +1,9 @@
-import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
-import { AvailableShip, ShipConfig, ShipPlacement, ShipPlacementService } from '../shared/game-board/ship-placement.service';
+
+import { AvailableShip, ShipPlacement, ShipPlacementService } from '../shared/game-board/ship-placement.service';
 
 @Component({
 	selector: 'app-prepare-board-view',
@@ -21,7 +22,12 @@ export class PrepareBoardViewComponent implements OnInit {
 	shipsPlaced: ShipPlacement = {};
 
 
-	constructor(private placementService: ShipPlacementService, private router: Router, private socket: Socket) {
+	constructor(
+		private placementService: ShipPlacementService,
+		private router: Router,
+		private socket: Socket,
+		private snackBar: MatSnackBar,
+	) {
 		this.socket.on('opponent:ready', () => {
 			this.opponentInfo = 'Your opponent is ready!';
 		});
@@ -30,7 +36,12 @@ export class PrepareBoardViewComponent implements OnInit {
 			console.log(info.first);
 			this.placementService.setPlayingFirst(info.first);
 			this.router.navigate(['/battle']);
-		})
+		});
+
+		this.socket.on('opponent:disconnected', () => {
+			this.snackBar.open('Your opponent has disconnected!', undefined, { duration: 5000 });
+			this.router.navigate(['/']);
+		});
 
 		this.placementService.placementChanged$.subscribe(placement => this.shipsPlaced = placement);
 	}

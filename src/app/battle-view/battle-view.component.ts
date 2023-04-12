@@ -16,7 +16,9 @@ export class BattleViewComponent implements OnInit {
 
 	constructor(private socket: Socket, private placementService: ShipPlacementService) {
 		// this.socket.on('')
-		this.placementService.onOpponentShot
+		this.placementService.onOpponentShot().subscribe((shot) => {
+			console.log('onOpponentShot', shot);
+		});
 	}
 
 	ngOnInit(): void {
