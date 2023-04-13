@@ -9,7 +9,7 @@ import { Socket } from 'ngx-socket-io';
 export class AppComponent {
 	title = 'battleshipz-web';
 
-	constructor(private socket: Socket) {
+	constructor(socket: Socket) {
 		socket.on('connect', () => {
 			console.log('[socket.io] Connected')
 		})

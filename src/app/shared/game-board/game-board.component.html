@@ -1,4 +1,4 @@
-<div class="board p-relative">
+<div class="board p-relative" [ngClass]="{disabled: !enabled}">
 	<div class="row">
 		<div class="h"></div>
 		<div class="h" *ngFor="let i of generateArray(size, 1)">{{i}}</div>
@@ -11,7 +11,8 @@
 			[cdkDropListConnectedTo]="boardFiledIds"
 			(click)="hit(field)"
 			*ngFor="let field of generateFieldsArray(size, row)" [id]="field">
-			<i class="material-icons" style="position: absolute;" *ngIf="boardHits(field)">close</i>
+			<i class="material-icons board-symbol" style="color: #d84315" *ngIf="boardHits(field)">close</i>
+			<i class="material-icons board-symbol" style="color: #00bcd425" *ngIf="boardMises(field)">adjust</i>
 
 			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
 				cdkDrag [cdkDragData]="shipsPlaced[field]"
@@ -19,5 +20,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- {{shipsPlaced | json}} -->

@@ -11,8 +11,7 @@ export class HeaderComponent implements OnInit {
 
 	playersOnline: number = 0;
 
-	constructor(private playersService: PlayersService) {
-	}
+	constructor(private playersService: PlayersService) {}
 
 	ngOnInit(): void {
 		this.playersService.playersOnline$.subscribe((playersOnline) => {

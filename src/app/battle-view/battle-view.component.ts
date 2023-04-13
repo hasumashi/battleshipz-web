@@ -14,21 +14,15 @@ export class BattleViewComponent implements OnInit {
 	headline = 'Battle!';
 	BoardType = BoardType;
 
-	constructor(private socket: Socket, private placementService: ShipPlacementService) {
-		// this.socket.on('')
-		this.placementService.onOpponentShot().subscribe((shot) => {
-			console.log('onOpponentShot', shot);
-		});
-	}
+	constructor(
+		private placementService: ShipPlacementService,
+	) { }
 
 	ngOnInit(): void {
-		if (this.placementService.playingFirst) {
-			this.headline = 'Your turn'
-			this.myTurn = true;
-		} else {
-			this.headline = "Opponent's turn";
-			this.myTurn = false;
-		}
+		this.placementService.myTurn$.subscribe((myTurn) => {
+			this.myTurn = myTurn;
+			this.headline = myTurn ? "Your turn" : "Opponent's turn";
+		});
 	}
 
 }

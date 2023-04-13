@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 
-import { AvailableShip, ShipPlacement, ShipPlacementService } from '../shared/game-board/ship-placement.service';
+import { AvailableShip, FieldsMap, ShipConfig, ShipPlacementService } from '../shared/game-board/ship-placement.service';
 
 @Component({
 	selector: 'app-prepare-board-view',
@@ -19,22 +19,24 @@ export class PrepareBoardViewComponent implements OnInit {
 	boardFiledIds = this.generateFieldCoords(this.boardSize);
 
 	availableShips: AvailableShip[] = this.startingAvailableShips();
-	shipsPlaced: ShipPlacement = {};
+	shipsPlaced: FieldsMap<ShipConfig> = {};
 
 
 	constructor(
-		private placementService: ShipPlacementService,
 		private router: Router,
 		private socket: Socket,
 		private snackBar: MatSnackBar,
-	) {
+		private placementService: ShipPlacementService,
+	) { }
+
+	ngOnInit(): void {
 		this.socket.on('opponent:ready', () => {
 			this.opponentInfo = 'Your opponent is ready!';
 		});
 
 		this.socket.on('game:start', (info: any) => {
 			console.log(info.first);
-			this.placementService.setPlayingFirst(info.first);
+			this.placementService.setPlayersTurn(info.first);
 			this.router.navigate(['/battle']);
 		});
 
@@ -43,10 +45,9 @@ export class PrepareBoardViewComponent implements OnInit {
 			this.router.navigate(['/']);
 		});
 
+		this.placementService.clearAllShips();
 		this.placementService.placementChanged$.subscribe(placement => this.shipsPlaced = placement);
 	}
-
-	ngOnInit(): void { }
 
 	private startingAvailableShips() {
 		return [
@@ -88,6 +89,9 @@ export class PrepareBoardViewComponent implements OnInit {
 		console.log('Marked as ready');
 		this.opponentInfo = 'Waiting for opponent…';
 		this.markedAsReady = true;
-		this.socket.emit('player:ready', this.shipsPlaced);
+		this.socket.emit('player:ready', {
+			shipsPlaced: this.shipsPlaced,
+			board: this.placementService.generateBoardGrid(),
+		});
 	}
 }

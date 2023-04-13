@@ -5,6 +5,15 @@
 }
 
 .board {
+    transition: opacity 0.5s ease;
+}
+
+.board.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.board {
     .h, .f {
         display: flex;
         width: calc(var(--cell-size) - var(--border-width));
@@ -19,6 +28,7 @@
     }
 
     .f { // field cell
+        position: relative;
         background: var(--ship-bg-color-inactive);
         border: var(--border-width) solid var(--ship-border-color-inactive);
         margin: calc(-0.5 * var(--border-width));
@@ -38,4 +48,12 @@
             pointer-events: none;
         }
     }
+}
+
+i.board-symbol {
+    position: absolute;
+    font-size: calc(0.8 * var(--cell-size));
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

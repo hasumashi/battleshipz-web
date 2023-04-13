@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, tap } from 'rxjs';
 
-export type ShipPlacement = {[field: string]: ShipConfig}; //Map<string, ShipConfig>;
+export type FieldsMap<T> = {[field: string]: T}; //Map<string, ShipConfig>;
 
 export interface ShipConfig {
 	field: string,
@@ -16,31 +16,47 @@ export interface AvailableShip {
 	count: number,
 }
 
+export enum FieldState {
+	None,
+	Hit,
+	Miss,
+}
+
 @Injectable({
 	providedIn: 'root'
 })
 export class ShipPlacementService {
 
-	shipsPlaced: ShipPlacement = {};
-	boardSize: number = 10;
-	playingFirst = false;
+	shipsPlaced: FieldsMap<ShipConfig> = {};
+	fieldStates: FieldsMap<FieldState> = {};
 
-	private placementChangedSource = new BehaviorSubject<ShipPlacement>({});
+	boardSize: number = 10;
+	myTurn = false;
+
+	private placementChangedSource = new BehaviorSubject<FieldsMap<ShipConfig>>({});
 	placementChanged$ = this.placementChangedSource.asObservable();
 
-	private opponentPlacementSource = new BehaviorSubject<ShipPlacement>({});
+	private opponentPlacementSource = new BehaviorSubject<FieldsMap<ShipConfig>>({});
 	opponentPlacement$ = this.opponentPlacementSource.asObservable();
 
-	setPlayingFirst(isFirst: boolean) {
-		this.playingFirst = isFirst;
+	private fieldStatesSource = new BehaviorSubject<FieldsMap<FieldState>>({});
+	fieldStates$ = this.fieldStatesSource.asObservable();
+
+	private myTurnSource = new ReplaySubject<boolean>(1);
+	myTurn$ = this.myTurnSource.asObservable();
+
+	setPlayersTurn(playerTurn: boolean) {
+		this.myTurn = playerTurn;
+		this.myTurnSource.next(this.myTurn);
 	}
 
 	onOpponentShot() {
-		return this.socket.fromEvent<any>('opponent:shot');
-	}
-
-	onHit() {
-		return this.socket.fromEvent<any>('player:hit');
+		return this.socket.fromEvent<any>('opponent:shot').pipe(
+			tap(() => {
+				console.log('TAP', this.myTurn)
+				this.setPlayersTurn(true);
+			}),
+		);
 	}
 
 	onGameEnd() {
@@ -48,7 +64,6 @@ export class ShipPlacementService {
 	}
 
 	constructor(private socket: Socket) {
-		// this.socket.fromEvent('playersOnline').subscribe(playersOnline => console.log(`There are ${playersOnline} players online`));
 	}
 
 	setBoardSize(size: number) {
@@ -170,7 +185,6 @@ export class ShipPlacementService {
 				return `${rowChar}${colChar}`;
 			})
 		})
-		console.log(coords.flat());
 		return coords.flat();
 	}
 
@@ -196,7 +210,7 @@ export class ShipPlacementService {
 		];
 	}
 
-	private generateBoardGrid() {
+	generateBoardGrid() {
 		const grid = Array(10).fill(null).map(() => Array(10).fill(false));
 		for (const shipConfig of Object.values(this.shipsPlaced)) {
 			const [row, col] = this.parseFieldString(shipConfig.field);

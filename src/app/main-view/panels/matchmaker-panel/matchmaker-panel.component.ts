@@ -38,29 +38,26 @@ export class MatchmakerPanelComponent implements OnInit {
 		}
 	};
 
-	constructor(private router: Router, private socket: Socket, private playersService: PlayersService) {
+	constructor(
+		private router: Router,
+		private socket: Socket,
+		private playersService: PlayersService,
+	) { }
+
+	ngOnInit(): void {
 		this.playersService.playersOnline$.subscribe((playersOnline) => {
 			this.playersAvailable = Math.max(0, playersOnline - 1);
 		});
 
-		socket.on('game:ready', () => {
+		this.socket.on('game:ready', () => {
 			this.router.navigate(['/prepare']);
-		})
-	}
-
-	ngOnInit(): void {
+		});
 	}
 
 	startSearching() {
 		this.matchmakingState = MatchmakingState.Searching;
 		this.timer.startTimer();
-
 		this.socket.emit('game:request');
-
-		// TODO mocked navigation
-		// setTimeout(() => {
-		// 	this.router.navigate(['/prepare']);
-		// }, 800);
 	}
 
 	cancelSearching() {

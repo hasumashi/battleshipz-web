@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { ShipConfig, ShipPlacement, ShipPlacementService } from './ship-placement.service';
+import { FieldsMap, ShipConfig, ShipPlacementService } from './ship-placement.service';
 
 export enum BoardType {
 	Player,
@@ -18,53 +18,67 @@ export class GameBoardComponent implements OnInit {
 	@Input() size = 10;
 	@Input() type = BoardType.Player;
 	@Input() battle = false;
+	@Input() enabled = true;
 
-	shipsPlaced: ShipPlacement = {};
+	shipsPlaced: FieldsMap<ShipConfig> = {};
 
-	_boardHits: {[field: string]: boolean} = {};
-	opponentBoardHits: {[field: string]: boolean} = {};
+	private fieldStates: { [field: string]: number } = {};
 
-	boardFiledIds = this.placementService.generateFieldCoords(10);
+	readonly boardFiledIds = this.placementService.generateFieldCoords(10);
 
 	boardHits(field: string) {
-		return this._boardHits[field];
-		// if (this.type === BoardType.Player)
-		// 	return this.playerBoardHits[field];
-		// else
-		// 	return this.opponentBoardHits[field];
+		return this.fieldStates[field] === 1;
 	}
 
-	constructor(private placementService: ShipPlacementService, private socket: Socket) {
-		this.placementService.onHit().subscribe(shot => {
-			if (shot.hit) {
-				this._boardHits[shot.field] = true;
-			}
-		})
+	boardMises(field: string) {
+		return this.fieldStates[field] === 2;
 	}
+
+	constructor(
+		private socket: Socket,
+		private placementService: ShipPlacementService,
+	) { }
 
 	ngOnInit(): void {
 		this.placementService.setBoardSize(this.size);
+
 		const placement$ = (this.type === BoardType.Player) ?
 			this.placementService.placementChanged$ :
 			this.placementService.opponentPlacement$;
 		placement$.subscribe(placement => this.shipsPlaced = placement);
 
-		this.placementService.onOpponentShot
+		if (this.type === BoardType.Opponent) {
+			this.placementService.fieldStates$.subscribe((states) => this.fieldStates = states);
+		} else if (this.type === BoardType.Player) {
+			this.placementService.onOpponentShot().subscribe((shot) => {
+				console.log(`[${this.type}] onOpponentShot`, shot);
+				this.setFieldState(shot.hit, shot.field);
+			});
+		}
+	}
+
+	private setFieldState(hit: any, field: string) {
+		console.log(`[${this.type}] #setFieldState`, hit, field);
+		this.fieldStates[field] = 1 - hit + 1; // FIXME enum hack
 	}
 
 	hit(field: string) {
-		if (this.battle) {
-			this.socket.emit('player:shoot', field);
-			// this._boardHits[field] = true;
+		if (this.battle && this.type === BoardType.Opponent && this.enabled) {
+			this.socket.emit('player:shoot', field, (data: any) => {
+				console.log(`[${this.type}] SHOOT callback data:`, data);
+				const { hit } = data;
+				this.setFieldState(hit, field);
+				this.placementService.setPlayersTurn(false);
+			});
 		}
 	}
 
 	generateArray(length: number, from: number = 0) {
-		return Array(length).fill(0).map((_,i) => from + i);
+		return Array(length).fill(0).map((_, i) => from + i);
 	}
 
 	generateFieldsArray(length: number, rowChar: string, from: number = 0) {
-		return Array(length).fill(rowChar).map((x,i) => x + (from + i));
+		return Array(length).fill(rowChar).map((x, i) => x + (from + i));
 	}
 
 	generateCharArray(length: number, startingChar: string): string[] {
@@ -89,7 +103,7 @@ export class GameBoardComponent implements OnInit {
 				...oldShipConfig,
 				field: targetField,
 			};
-			this.placementService.removeShip(oldShipConfig.field);;
+			this.placementService.removeShip(oldShipConfig.field);
 			if (!this.placementService.addShip(movedShipConfig))
 				this.placementService.addShip(oldShipConfig);
 			return;
@@ -109,6 +123,9 @@ export class GameBoardComponent implements OnInit {
 	}
 
 	rotateShip(field: string, event: any) {
+		if (this.battle) {
+			return;
+		}
 		const target = event.currentTarget;
 		target.classList.remove('anim-shake-rotate');
 		setTimeout(() => {
