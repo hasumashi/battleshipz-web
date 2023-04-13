@@ -15,7 +15,7 @@
 			<i class="material-icons board-symbol" style="color: #00bcd425" *ngIf="boardMises(field)">adjust</i>
 
 			<app-ship-placeholder *ngIf="shipsPlaced[field]" [size]="shipsPlaced[field].size"
-				cdkDrag [cdkDragData]="shipsPlaced[field]"
+				cdkDrag [cdkDragData]="shipsPlaced[field]" [cdkDragDisabled]="battle"
 				(click)="rotateShip(field, $event)" [class.rotated]="!shipsPlaced[field].horizontal"></app-ship-placeholder>
 		</div>
 	</div>

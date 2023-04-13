@@ -53,6 +53,7 @@ export class GameBoardComponent implements OnInit {
 			this.placementService.onOpponentShot().subscribe((shot) => {
 				console.log(`[${this.type}] onOpponentShot`, shot);
 				this.setFieldState(shot.hit, shot.field);
+				document.getElementById('opponentBoard')?.scrollIntoView({ behavior: 'smooth' });
 			});
 		}
 	}
@@ -70,6 +71,7 @@ export class GameBoardComponent implements OnInit {
 				this.setFieldState(hit, field);
 				if (!hit) {
 					this.placementService.setPlayersTurn(false);
+					document.getElementById('myBoard')?.scrollIntoView({ behavior: 'smooth' });
 				}
 			});
 		}

@@ -1,13 +1,13 @@
 <h1>{{headline}}</h1>
 
 <div class="column grow">
-	<div class="row grow align-start align-cross-baseline">
-		<div class="size-1-2 column align-cross-center padding">
-			<app-game-board [battle]="true" [type]="BoardType.Player" [enabled]="!myTurn"></app-game-board>
+	<div class="row sm-column grow align-start lg-align-cross-baseline">
+		<div class="lg-size-1-2 column align-cross-center padding">
+			<app-game-board [battle]="true" [type]="BoardType.Player" [enabled]="!myTurn" id="myBoard"></app-game-board>
 		</div>
 
-		<div class="size-1-2 flex align-center">
-			<app-game-board [battle]="true" [type]="BoardType.Opponent" [enabled]="myTurn"></app-game-board>
+		<div class="lg-size-1-2 flex align-center">
+			<app-game-board [battle]="true" [type]="BoardType.Opponent" [enabled]="myTurn" id="opponentBoard"></app-game-board>
 		</div>
 	</div>
 </div>
