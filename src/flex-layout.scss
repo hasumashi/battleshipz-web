@@ -20,8 +20,8 @@
 
     .#{$prefix}row             { flex-direction: row; }
     .#{$prefix}column          { flex-direction: column; }
-    // .#{$prefix}row-reverse     { flex-direction: row-reverse; }
-    // .#{$prefix}column-reverse  { flex-direction: column-reverse; }
+    .#{$prefix}row-reverse     { flex-direction: row-reverse; }
+    .#{$prefix}column-reverse  { flex-direction: column-reverse; }
 
     .#{$prefix}wrap            { flex-wrap: wrap; }
     .#{$prefix}wrap-reverse    { flex-wrap: wrap-reverse; }
@@ -146,6 +146,10 @@
     @include helper-classes("sm-");
     @include size-X-Y("sm-");
     // @include order-N;
+
+    .sm-hide {
+        display: none;
+    }
 }
 
 @media (min-width: 1024px) {

@@ -1,8 +1,4 @@
-:host {
-    --cell-size: 50px;
-    --border-width: 4px;
-    --board-radius: var(--border-width);
-}
+@import "../../variables.scss";
 
 .board {
     transition: opacity 0.5s ease;
