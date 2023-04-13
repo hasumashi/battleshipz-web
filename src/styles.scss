@@ -166,6 +166,14 @@ body {
 
 
 // Breakpoints
+@media (max-width: 425px) {
+    .view-wrapper h1 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0.5em 0;
+    }
+}
+
 @media (max-width: 1400px) {
     .view-wrapper {
         width: 95vw;

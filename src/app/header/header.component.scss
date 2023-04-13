@@ -22,3 +22,9 @@ small {
     font-size: 0.8em;
     vertical-align: unset;
 }
+
+@media (max-width: 425px) {
+    nav {
+        padding: 2rem 0 1rem;
+    }
+}

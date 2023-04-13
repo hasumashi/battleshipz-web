@@ -7,7 +7,7 @@
 			<ng-template #noPlayersIcon>
 				<i class="material-icons md-64">sentiment_dissatisfied</i>
 			</ng-template>
-			<p>There are <strong>{{playersAvailable | else:'no'}}</strong> players online right now</p>
+			<p class="info">There are <strong>{{playersAvailable | else:'no'}}</strong> players online right now</p>
 		</div>
 		<div>
 			<button mat-button (click)="startSearching()">FIND OPPONENT</button>

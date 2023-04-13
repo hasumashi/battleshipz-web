@@ -1,4 +1,4 @@
-<div class="row align-center" [class.panel-is-opened]="isPanelOpen"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
+<div class="row align-center" [class.panel-is-opened]="isPanelOpen()"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
 	<div class="main-container column sm-size-1-1 size-3-5" [class.size-4-6]="!isPanelOpen()"> <!-- style="transition: flex-basis 0.5s ease;" TODO: .size-animated/transition -->
 		<div class="row sm-column align-space-evenly">
 			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
@@ -17,7 +17,7 @@
 
 	<ng-template [ngIf]="isPanelOpen()">
 		<mat-divider [vertical]="true"></mat-divider>
-		<div class="lg-size-2-5 lg-padding panel">
+		<div class="panel grow lg-size-2-5 padding">
 			<mat-card>
 				<h2>
 					<i class="material-icons" style="cursor: pointer;" [routerLink]="baseRoutePath">arrow_back</i>
