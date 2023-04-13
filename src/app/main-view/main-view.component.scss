@@ -12,3 +12,19 @@
         font-family: var(--fonts-display);
     }
 }
+
+@media (max-width: 425px) {
+    .panel-is-opened {
+        .panel {
+            padding: 0;
+        }
+
+        .main-container {
+            display: none;
+        }
+
+        mat-divider {
+            display: none;
+        }
+    }
+}

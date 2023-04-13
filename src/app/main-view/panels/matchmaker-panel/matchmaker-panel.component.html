@@ -1,6 +1,6 @@
 <!-- TODO fix h-1-1 causing overflow -->
 <!-- TODO button changes position when clicked (align-space-around) -->
-<div class="column align-space-around align-cross-center h-1-1" [ngSwitch]="matchmakingState">
+<div class="column align-space-around align-cross-center lg-h-1-1" [ngSwitch]="matchmakingState">
 	<ng-container *ngSwitchDefault>
 		<div class="text-center">
 			<i class="material-icons md-64" *ngIf="playersAvailable; else: noPlayersIcon">groups</i>

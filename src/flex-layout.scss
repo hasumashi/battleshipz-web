@@ -9,83 +9,89 @@
  */
 
 /* Container classes */
-.flex, .row, .column {
-    display: flex;
+@mixin container-classes($prefix: "") {
+    .#{$prefix}flex, .#{$prefix}row, .#{$prefix}column {
+        display: flex;
+    }
+
+    .#{$prefix}flex-inline {
+        display: inline-flex;
+    }
+
+    .#{$prefix}row             { flex-direction: row; }
+    .#{$prefix}column          { flex-direction: column; }
+    // .#{$prefix}row-reverse     { flex-direction: row-reverse; }
+    // .#{$prefix}column-reverse  { flex-direction: column-reverse; }
+
+    .#{$prefix}wrap            { flex-wrap: wrap; }
+    .#{$prefix}wrap-reverse    { flex-wrap: wrap-reverse; }
+
+    // aligning along main/cross axis
+    .#{$prefix}align-start          { justify-content: flex-start; }
+    .#{$prefix}align-end            { justify-content: flex-end; }
+    .#{$prefix}align-center         { justify-content: center; }
+    .#{$prefix}align-space-around   { justify-content: space-around; }
+    .#{$prefix}align-space-between  { justify-content: space-between; }
+    .#{$prefix}align-space-evenly   { justify-content: space-evenly; }
+
+    .#{$prefix}align-cross-stretch  { align-items: stretch; }
+    .#{$prefix}align-cross-start    { align-items: flex-start; }
+    .#{$prefix}align-cross-end      { align-items: flex-end; }
+    .#{$prefix}align-cross-center   { align-items: center; }
+    .#{$prefix}align-cross-baseline { align-items: baseline; }
+
+    .#{$prefix}align-self-stretch  { align-self: stretch; }
+    .#{$prefix}align-self-start    { align-self: flex-start; }
+    .#{$prefix}align-self-end      { align-self: flex-end; }
+    .#{$prefix}align-self-center   { align-self: center; }
+    .#{$prefix}align-self-baseline { align-self: baseline; }
 }
-
-.flex-inline {
-    display: inline-flex;
-}
-
-.row             { flex-direction: row; }
-.column          { flex-direction: column; }
-// .row-reverse     { flex-direction: row-reverse; }
-// .column-reverse  { flex-direction: column-reverse; }
-
-.wrap            { flex-wrap: wrap; }
-.wrap-reverse    { flex-wrap: wrap-reverse; }
-
-// aligning along main/cross axis
-.align-start          { justify-content: flex-start; }
-.align-end            { justify-content: flex-end; }
-.align-center         { justify-content: center; }
-.align-space-around   { justify-content: space-around; }
-.align-space-between  { justify-content: space-between; }
-.align-space-evenly   { justify-content: space-evenly; }
-
-.align-cross-stretch  { align-items: stretch; }
-.align-cross-start    { align-items: flex-start; }
-.align-cross-end      { align-items: flex-end; }
-.align-cross-center   { align-items: center; }
-.align-cross-baseline { align-items: baseline; }
-
 
 /* Item classes */
-.grow {
-    flex-grow: 1;
+@mixin item-classes($prefix: "") {
+    .#{$prefix}grow {
+        flex-grow: 1;
+    }
+
+    .#{$prefix}no-shrink {
+        flex-shrink: 0;
+    }
+
+    .#{$prefix}size-absolute {
+        flex-basis: 0;
+    }
+
+    .row .#{$prefix}size-1-1,
+    .#{$prefix}row .#{$prefix}size-1-1 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .column .#{$prefix}size-1-1,
+    .#{$prefix}column .#{$prefix}size-1-1 {
+        flex: 0 0 100%;
+        max-height: 100%;
+    }
 }
 
-.no-shrink {
-    flex-shrink: 0;
-}
+@mixin size-X-Y($prefix: "") {
+    .#{$prefix}h-1-1 {
+        height: 100%;
+    }
 
-// .flex-relative {
-//     flex-basis: auto; // the default
-// }
-
-// item ordering
-// $columns: 12; TODO remove
-
-
-.size-absolute {
-    flex-basis: 0;
-}
-
-.row .size-1-1 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-.column .size-1-1 {
-    flex: 0 0 100%;
-    max-height: 100%;
-}
-
-@mixin size-X-Y {
     @for $y from 2 through 6 {
         @for $x from 1 through $y - 1 {
             $size: math.div($x, $y) * 100%;
-            .row > .size-#{$x}-#{$y} {
+            .row > .#{$prefix}size-#{$x}-#{$y} {
                 flex: 0 0 $size;
                 max-width: $size;
             }
-            .column > .size-#{$x}-#{$y} {
+            .column > .#{$prefix}size-#{$x}-#{$y} {
                 flex: 0 0 $size;
                 max-height: $size;
             }
         }
     }
 }
-@include size-X-Y;
 
 @mixin order-N {
     @for $i from 1 through 6 {
@@ -94,44 +100,58 @@
         }
     }
 }
-@include order-N;
-
-// self aligning
-.align-self-stretch  { align-self: stretch; }
-.align-self-start    { align-self: flex-start; }
-.align-self-end      { align-self: flex-end; }
-.align-self-center   { align-self: center; }
-.align-self-baseline { align-self: baseline; }
 
 
 /*
  * General helper classes
  */
 
-.text-left   { text-align: left; }
-.text-center { text-align: center; }
-.text-right  { text-align: right; }
+@mixin helper-classes($prefix: "") {
+    .#{$prefix}text-left   { text-align: left; }
+    .#{$prefix}text-center { text-align: center; }
+    .#{$prefix}text-right  { text-align: right; }
 
-.d-block     { display: block; }
-.d-inline    { display: inline; }
+    .#{$prefix}d-block     { display: block; }
+    .#{$prefix}d-inline    { display: inline; }
 
-.h-1-1 {
-    height: 100%;
+    .#{$prefix}margin-center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .#{$prefix}padding {
+        padding: 1rem;
+    }
+
+    .#{$prefix}no-select {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+
+        pointer-events: none;
+    }
 }
 
-.margin-center {
-    margin-left: auto;
-    margin-right: auto;
+/* Main */
+@include container-classes();
+@include item-classes();
+@include helper-classes();
+@include size-X-Y();
+@include order-N;
+
+
+@media (max-width: 425px) {
+    @include container-classes("sm-");
+    @include item-classes("sm-");
+    @include helper-classes("sm-");
+    @include size-X-Y("sm-");
+    // @include order-N;
 }
 
-.padding {
-    padding: 1rem;
-}
-
-.no-select {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-
-    pointer-events: none;
+@media (min-width: 1024px) {
+    @include container-classes("lg-");
+    @include item-classes("lg-");
+    @include helper-classes("lg-");
+    @include size-X-Y("lg-");
+    // @include order-N;
 }

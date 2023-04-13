@@ -28,3 +28,22 @@
         border-top-color: rgba(255, 255, 255, 0.24);
     }
 }
+
+@media (max-width: 425px) {
+    .box-card {
+        & {
+            padding-bottom: 0;
+        }
+
+        .mat-card-header .mat-card-title {
+            font-size: inherit;
+            margin-top: inherit;
+        }
+
+        mat-card-footer {
+            position: inherit;
+            margin: inherit;
+        }
+    }
+
+}
