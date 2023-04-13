@@ -1,14 +1,14 @@
 <div class="row align-center" [class.panel-is-opened]="isPanelOpen()"> <!-- TODO use 'align-space-around' to place <mat-divider> between columns -->
 	<div class="main-container column size-3-5 sm-size-1-1" [class.sm-hide]="isPanelOpen()" [class.size-4-6]="!isPanelOpen()"> <!-- style="transition: flex-basis 0.5s ease;" TODO: .size-animated/transition -->
 		<div class="row sm-column align-space-evenly">
-			<app-welcome-card class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
+			<app-welcome-card img="assets/board-perspective.png" [class.size-2-3]="isPanelOpen()" class="flex grow padding"></app-welcome-card>
 			<div class="flex lg-size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
 				<app-button-card title="Find your opponent" buttonText="PLAY" link="/random" class="grow"></app-button-card>
 			</div>
 		</div>
 
 		<div class="row sm-column align-space-evenly">
-			<app-welcome-card title="Lorem ipsum" class="flex padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
+			<app-welcome-card title="Lorem ipsum" img="assets/the-board-game-of-battleship.jpeg" class="flex grow padding" [class.size-2-3]="isPanelOpen()"></app-welcome-card>
 			<div class="flex lg-size-1-3 padding"> <!-- [class.size-1-4]="!isPanelOpen()"> -->
 				<app-button-card title="Play with friend" buttonText="INVITE" link="/invite" color="#00897b" class="grow"></app-button-card>
 			</div>

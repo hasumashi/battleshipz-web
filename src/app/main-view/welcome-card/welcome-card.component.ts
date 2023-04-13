@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class WelcomeCardComponent implements OnInit {
 
-	@Input('img') img = 'assets/board-perspective.png';
+	@Input('img') img = '';
 	@Input('title') title = 'Welcome';
 	@Input('content') content = 'Ad magna cillum do consequat veniam ad laboris.'; // TODO accept template in body
 
