@@ -68,7 +68,9 @@ export class GameBoardComponent implements OnInit {
 				console.log(`[${this.type}] SHOOT callback data:`, data);
 				const { hit } = data;
 				this.setFieldState(hit, field);
-				this.placementService.setPlayersTurn(false);
+				if (!hit) {
+					this.placementService.setPlayersTurn(false);
+				}
 			});
 		}
 	}

@@ -52,9 +52,10 @@ export class ShipPlacementService {
 
 	onOpponentShot() {
 		return this.socket.fromEvent<any>('opponent:shot').pipe(
-			tap(() => {
-				console.log('TAP', this.myTurn)
-				this.setPlayersTurn(true);
+			tap((shot) => {
+				if (!shot?.hit) {
+					this.setPlayersTurn(true);
+				}
 			}),
 		);
 	}
